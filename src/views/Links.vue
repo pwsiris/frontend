@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <img src="/static/images/iris_ti_square_025.png" class="mx-auto mt-2 self-center select-none rounded-full bg-pwsi-1 max-h-72 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"/>
+        <img :src="'/static/images/iris_ti_square_025.png'" class="mx-auto mt-2 self-center select-none rounded-full bg-pwsi-1 max-h-72 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"/>
         <p class="text-3xl font-bold tracking-tight sm:text-4xl mt-6">Iris_ti</p>
         <p class="text-lg mt-3">Белкокицунэвая кролякошака</p>
         <p class="text-md mt-0 pt-0">(и ваш стример ...)</p>
@@ -17,11 +17,11 @@
     </div>
 
     <div class="flex flex-row justify-center place-items-center">
-        <img src="/static/images/pumpkin_2y.png" class="select-none h-6" />
-        <img src="/static/images/pumpkin_2y.png" class="select-none h-9" />
-        <img src="/static/images/pumpkin_2y.png" class="select-none h-12" />
-        <img src="/static/images/pumpkin_2y.png" class="select-none h-9" />
-        <img src="/static/images/pumpkin_2y.png" class="select-none h-6" />
+        <img :src="'/static/images/pumpkin_2y.png'" class="select-none h-6" />
+        <img :src="'/static/images/pumpkin_2y.png'" class="select-none h-9" />
+        <img :src="'/static/images/pumpkin_2y.png'" class="select-none h-12" />
+        <img :src="'/static/images/pumpkin_2y.png'" class="select-none h-9" />
+        <img :src="'/static/images/pumpkin_2y.png'" class="select-none h-6" />
     </div>
     <div class="mt-1 text-md font-bold leading-6 flex flex-wrap">
         <div
