@@ -1,0 +1,65 @@
+name: Deploy app
+run-name: Deploy app from branch ${{ github.ref_name }} to ${{ inputs.target }} env
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Environment for deployment"
+        required: true
+        default: 'test'
+        type: choice
+        options:
+          - test
+          - prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}
+      - name: Node build
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+      - run: npm ci
+      - run: npm run build
+
+      - name: TAR build
+        env:
+          PWSI_FRONTEND_REPO: ${{ github.event.repository.name }}
+          PWSI_FRONTEND_ENV: ${{ inputs.target }}
+        run: tar -cvf pwsi_${{ env.PWSI_FRONTEND_REPO }}_${{ env.PWSI_FRONTEND_ENV }}.tar dist/
+      
+      - name: Copy TAR to host
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "pwsi_${{ github.event.repository.name }}_${{ inputs.target }}.tar"
+          target: "~/builds"
+      - name: Deploy on host
+        uses: appleboy/ssh-action@v1.0.0
+        env:
+          PWSI_FRONTEND_REPO: ${{ github.event.repository.name }}
+          PWSI_FRONTEND_ENV: ${{ inputs.target }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          port: ${{ secrets.SSH_PORT }}
+          script_stop: true
+          script: |
+            sudo rm ~/build_artifacts/pwsi_${{ env.PWSI_FRONTEND_REPO }}_${{ env.PWSI_FRONTEND_ENV }}.tar || true
+            sudo mv ~/builds/pwsi_${{ env.PWSI_FRONTEND_REPO }}_${{ env.PWSI_FRONTEND_ENV }}.tar ~/build_artifacts/
+            sudo rm -rf /var/www/pwsi-${{ env.PWSI_FRONTEND_REPO }}-${{ env.PWSI_FRONTEND_ENV }}/*
+            sudo tar -xf ~/build_artifacts/pwsi_${{ env.PWSI_FRONTEND_REPO }}_${{ env.PWSI_FRONTEND_ENV }}.tar -C /var/www/pwsi-${{ env.PWSI_FRONTEND_REPO }}-${{ env.PWSI_FRONTEND_ENV }}/
+            sudo chmod -R 755 /var/www/pwsi-${{ env.PWSI_FRONTEND_REPO }}-${{ env.PWSI_FRONTEND_ENV }}/
