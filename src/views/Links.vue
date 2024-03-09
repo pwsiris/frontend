@@ -1,8 +1,8 @@
 <template>
     <div class="text-center">
-        <img src="/static/images/iris_square.png" class="mx-auto mt-2 self-center select-none rounded-full bg-pwsi-1 max-h-72 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"/>
+        <img src="/static/images/iris_ti_square_025.png" class="mx-auto mt-2 self-center select-none rounded-full bg-pwsi-1 max-h-72 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"/>
         <p class="text-3xl font-bold tracking-tight sm:text-4xl mt-6">Iris_ti</p>
-        <p class="text-lg mt-3">Кролякошаковая белкокицунэ-тян</p>
+        <p class="text-lg mt-3">Белкокицунэвая кролякошака</p>
         <p class="text-md mt-0 pt-0">(и ваш стример ...)</p>
         <a :href="main_link.link"
             class="overflow-hidden mx-auto flex place-items-center sm:max-w-sm bg-pwsi-1 sm:hover:bg-pwsi-2 rounded-lg text-xl font-bold shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
