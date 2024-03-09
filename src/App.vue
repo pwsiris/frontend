@@ -2,7 +2,7 @@
     <header>
         <nav class="mx-auto flex items-center justify-between max-w-screen-2xl p-6 lg:px-8" aria-label="Global">
             <router-link to="/" class="flex md:flex-1 z-30 -m-1.5 p-1.5">
-                <img class="h-8 sm:h-10 lg:h-12 w-auto rounded-full" src="/static/images/avatar.png" alt="" />
+                <img class="h-8 sm:h-10 lg:h-12 w-auto rounded-full" :src="'/static/images/avatar.png'" alt="" />
             </router-link>
 
             <div class="flex z-10 lg:hidden">

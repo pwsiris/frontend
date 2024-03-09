@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <img src="/static/images/Iris_ti_main_dark.png" class="order-first lg:order-none select-none" />
+        <img :src="'/static/images/Iris_ti_main_dark.png'" class="order-first lg:order-none select-none" />
     </div>
 </template>
 

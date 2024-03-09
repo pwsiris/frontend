@@ -7,25 +7,12 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
-        vue({
-            template: {
-                transformAssetUrls: {
-                    includeAbsolute: false
-                }
-            }
-        }),
+        vue(),
         vueJsx(),
     ],
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url))
-        }
-    },
-    build: {
-        rollupOptions: {
-            external: [
-                /^\/static\/images\/.*/,
-            ]
         }
     }
 })
