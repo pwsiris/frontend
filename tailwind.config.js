@@ -15,6 +15,8 @@ export default {
                 'pwsi-text': '#cbd5e1', /** slate-300 */
                 'pwsi-done': '#059669', /** emerald-600 */
                 'pwsi-in-progress': '#eab308', /** yellow-500 */
+                'pwsi-on-hold': '#c084fc', /** purple-400 */
+                'pwsi-first-look': '#0891b2', /** cyan-600 */
                 'pwsi-dropped': '#e11d48', /** rose-600 */
                 'pwsi-link': '#ffffff', /** white */
                 'pwsi-shadow': '#111827', /** gray-900 */
@@ -23,4 +25,3 @@ export default {
     },
     plugins: [],
 }
-
