@@ -11,7 +11,7 @@
             <div class="p-1 pl-2 h-full flex place-items-center">
                 <font-awesome-icon :icon="main_link.icon" class="w-12 h-auto" />
             </div>
-            <span class="px-2 grow text-center lg:text-left">{{ main_link.name }}</span>
+            <span class="px-14 lg:px-2 grow text-center lg:text-left -ml-14 -mr-8 lg:ml-0 lg:mr-0">{{ main_link.name }}</span>
             <span class="pr-4">&rarr;</span>
         </a>
     </div>
@@ -29,13 +29,13 @@
             class="w-full sm:w-1/2 mx-auto"
         >
             <a :href="social.link"
-            class="overflow-hidden my-1 sm:m-1 bg-pwsi-1 sm:hover:bg-pwsi-2 rounded-lg flex place-items-center h-16 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
-            target="_blank" rel="noreferrer"
+                class="overflow-hidden my-1 sm:m-1 bg-pwsi-1 sm:hover:bg-pwsi-2 rounded-lg flex place-items-center h-16 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
+                target="_blank" rel="noreferrer"
             >
             <div class="p-1 pl-2 h-full flex place-items-center">
                 <font-awesome-icon :icon="social.icon" class="w-12 h-auto" />
             </div>
-            <span class="px-2 grow text-center lg:text-left">{{ social.name }}</span>
+            <span class="px-14 lg:px-2 grow text-center lg:text-left -ml-14 -mr-7 lg:ml-0 lg:mr-0">{{ social.name }}</span>
             <span class="pr-4">&rarr;</span>
             </a>
         </div>

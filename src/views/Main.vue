@@ -1,7 +1,7 @@
 <template>
     <div class="mx-auto grid max-w-2xl grid-cols-1 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 place-items-center">
         <div class="lg:max-w-2lg">
-            <p class="text-3xl font-bold tracking-tight sm:text-4xl text-center sm:text-left">Iris_ti</p>
+            <p class="text-3xl font-bold tracking-tight sm:text-8xl text-center sm:text-left">Iris_ti</p>
             <p class="mt-6 text-lg leading-6 text-justify">
                 Она, рождённая лунным светом и магией, провела крайне насыщенную жизнь в совершенно другом и далёком от нас мире. 
                 Там было всё - и сложное детство, и война, и веселые деньки в школе магии. 
@@ -12,7 +12,7 @@
                 радует людей уютом, небольшой токсичностью и разнообразием игр, 
                 тем самым пытаясь найти новых знакомых и самую крепкую семью.
             </p>
-            <p class="mt-6 text-xl font-bold leading-6 text-center sm:text-left">
+            <p class="mt-20 text-xl sm:text-2xl font-bold leading-6 text-center sm:text-left">
                 Найти меня можно тут:
             </p>
             <div class="mt-3 text-xl font-bold leading-6 flex flex-wrap">
@@ -22,11 +22,11 @@
                 >
                     <a
                         :href="social.link"
-                        class="my-1 sm:m-1 p-1 bg-pwsi-1 rounded-lg flex place-items-center shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
+                        class="my-1 sm:m-1 p-1 sm:p-2 bg-pwsi-1 rounded-lg flex place-items-center shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
                         target="_blank" rel="noreferrer"
                     >
-                        <font-awesome-icon :icon="social.icon" class="w-6 mr-1" />
-                        <span class="grow text-center lg:text-left">{{ social.name }}</span>
+                        <font-awesome-icon :icon="social.icon" class="w-6 mr-2" />
+                        <span class="grow text-center lg:text-left -ml-8 lg:ml-0">{{ social.name }}</span>
                     </a>
                 </div>
             </div>

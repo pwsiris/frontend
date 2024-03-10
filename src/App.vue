@@ -2,12 +2,12 @@
     <header>
         <nav class="mx-auto flex items-center justify-between max-w-screen-2xl p-6 lg:px-8" aria-label="Global">
             <router-link to="/" class="flex md:flex-1 z-30 -m-1.5 p-1.5">
-                <img class="h-8 sm:h-10 lg:h-12 w-auto rounded-full" :src="'/static/images/avatar.png'" alt="" />
+                <img class="h-10 sm:h-12 lg:h-14 w-auto rounded-full" :src="'/static/images/avatar.png'" alt="" />
             </router-link>
 
             <div class="flex z-10 lg:hidden">
                 <button type="button" class="-m-2.5 p-2.5 rounded-md inline-flex items-center justify-center" @click="mobileMenuOpen = true">
-                    <font-awesome-icon icon="fa-solid fa-bars" class="h-6 w-6 sm:h-10 sm:w-10" aria-hidden="true" />
+                    <font-awesome-icon icon="fa-solid fa-bars" class="h-8 w-8 sm:h-12 sm:w-12" aria-hidden="true" />
                 </button>
             </div>
 
@@ -15,7 +15,7 @@
                 <router-link v-for="link in links" :key="link.url" :to="link.url">{{ link.name }}</router-link>
             </PopoverGroup>
 
-            <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4 z-10"></div>
+            <!-- <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4 z-10"></div> -->
         </nav>
 
         <Dialog as="div" class="lg:hidden text-pwsi-text" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
@@ -23,7 +23,7 @@
             <DialogPanel class="fixed inset-y-0 right-0 z-10 overflow-y-auto px-6 py-6 w-1/2 sm:max-w-sm ring-1 ring-pwsi-text/10 bg-pwsi-2 sm:bg-gradient-to-t sm:from-pwsi-2 sm:to-pwsi-1">
                 <div class="flex flex-row-reverse h-10">
                     <button type="button" class="-m-2.5 p-2.5 rounded-md" @click="mobileMenuOpen = false">
-                        <font-awesome-icon icon="fa-solid fa-xmark" class="h-6 w-6 sm:h-10 sm:w-10" aria-hidden="true" />
+                        <font-awesome-icon icon="fa-solid fa-xmark" class="h-8 w-8 sm:h-12 sm:w-12" aria-hidden="true" />
                     </button>
                 </div>
                 <div class="mt-6 flow-root">
