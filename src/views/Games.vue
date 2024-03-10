@@ -287,5 +287,8 @@
     status_mapping.set("Пройдено", "text-pwsi-done");
     status_mapping.set("Проходим", "text-pwsi-in-progress");
     status_mapping.set("Играем", "text-pwsi-in-progress");
+    status_mapping.set("Отложено", "text-pwsi-on-hold");
+    status_mapping.set("Первый взгляд", "text-pwsi-first-look");
     status_mapping.set("Заброшено", "text-pwsi-dropped");
+    status_mapping.set("Даже начинать не будем", "text-pwsi-dropped");
 </script>
