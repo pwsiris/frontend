@@ -5,7 +5,7 @@
     </div>
 
     <div
-        v-for="marathon in marathons" :key="marathon.name"
+        v-for="marathon in marathons.slice().reverse()" :key="marathon.name"
         class="rounded-lg bg-pwsi-1 mt-2 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
     >
         <Disclosure v-slot="{ open }">
@@ -30,7 +30,7 @@
             </DisclosureButton>
             <DisclosurePanel class="flex flex-col p-2 pt-0">
                 <button
-                    v-for="game in marathon.games" :key="game.id"
+                    v-for="game in marathon.games.slice().reverse()" :key="game.id"
                     type="button"
                     @click="openModal(game)"
                     class="flex justify-between place-items-center rounded-lg mt-2 p-2 bg-pwsi-2"
