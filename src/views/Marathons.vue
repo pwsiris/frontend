@@ -30,7 +30,7 @@
             </DisclosureButton>
             <DisclosurePanel class="flex flex-col p-2 pt-0">
                 <button
-                    v-for="game in marathon.games.slice().reverse()" :key="game.id"
+                    v-for="game in marathon.games" :key="game.id"
                     type="button"
                     @click="openModal(game)"
                     class="flex justify-between place-items-center rounded-lg mt-2 p-2 bg-pwsi-2"
