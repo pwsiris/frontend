@@ -46,7 +46,7 @@
                     class="w-full flex place-items-center justify-between p-2"
                 >
                     <span class="px-1 text-lg sm:text-xl font-bold text-left">{{ anime.name }}</span>
-                    <div class="flex">
+                    <div class="flex pl-1 place-items-center">
                         <span class="mr-2 sm:text-lg font-bold" v-if="anime.score">{{ anime.score }}/10</span>
                         <font-awesome-icon icon="fa-solid fa-angle-down" :class="open ? 'rotate-180 transform' : ''" class="shrink-0 h-8 w-8" />
                     </div>
