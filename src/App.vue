@@ -96,6 +96,10 @@
             url: "/challenges"
         },
         {
+            name: "Марафоны",
+            url: "/marathons"
+        },
+        {
             name: "Ня анимесса",
             url: "/anime"
         }
