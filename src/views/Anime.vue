@@ -43,7 +43,7 @@
         <div v-if="anime.series !== null">
             <Disclosure v-slot="{ open }">
                 <DisclosureButton
-                    class="w-full flex place-items-center justify-between p-2"
+                    class="w-full flex place-items-center justify-between p-2 select-text"
                 >
                     <span class="px-1 text-lg sm:text-xl font-bold text-left">{{ anime.name }}</span>
                     <font-awesome-icon icon="fa-solid fa-angle-down" :class="open ? 'rotate-180 transform' : ''" class="shrink-0 h-8 w-8" />
