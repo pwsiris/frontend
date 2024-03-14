@@ -52,6 +52,14 @@ const router = createRouter({
             }
         },
         {
+            path: "/marathons",
+            name: 'MarathonsView',
+            component: () => import('../views/Marathons.vue'),
+            meta: {
+                title: 'Марафоны | Iris_ti'
+            }
+        },
+        {
             path: "/anime",
             name: 'AnimeView',
             component: () => import('../views/Anime.vue'),
