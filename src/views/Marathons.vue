@@ -34,9 +34,10 @@
                     type="button"
                     @click="openModal(game)"
                     class="flex justify-between place-items-center rounded-lg mt-2 p-2 bg-pwsi-2"
+                    :class="status_mapping.has(game.status) ? status_mapping.get(game.status) : ''"
                 >
                     <span class="px-1 sm:text-lg font-bold text-left">{{ game.name }}</span>
-                    <span class="hidden sm:inline px-1 text-sm sm:text-base font-bold text-end" :class="status_mapping.has(game.status) ? status_mapping.get(game.status) : ''" v-if="game.status">
+                    <span class="hidden sm:inline px-1 text-sm sm:text-base font-bold text-end" v-if="game.status">
                         {{ game.status }}
                     </span>
                 </button>
