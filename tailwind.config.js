@@ -17,7 +17,7 @@ export default {
                 'pwsi-in-progress': '#eab308', /** yellow-500 */
                 'pwsi-on-hold': '#c084fc', /** purple-400 */
                 'pwsi-first-look': '#0891b2', /** cyan-600 */
-                'pwsi-dropped': '#e11d48', /** rose-600 */
+                'pwsi-dropped': '#f43f5e', /** rose-500 */
                 'pwsi-link': '#ffffff', /** white */
                 'pwsi-shadow': '#111827', /** gray-900 */
             },
