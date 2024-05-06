@@ -50,9 +50,10 @@
     </main>
 
     <footer>
-        <div class="text-center">
-            <span><b>Iris_ti website</b></span><br>
-            <span>by mirakzen</span><br>
+        <div class="text-center mb-2">
+            <a href="https://github.com/pwsiris" target="_blank" rel="noreferrer">
+                <b>Iris_ti website</b><br>by mirakzen
+            </a>
         </div>
     </footer>
 

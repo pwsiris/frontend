@@ -108,7 +108,33 @@
             </DisclosurePanel>
         </Disclosure>
     </div>
-    
+
+    <div
+        v-if="games_demo.length !== 0" 
+        :class="isHidden ? 'hidden' : ''"
+        class="rounded-lg bg-pwsi-1 mt-10 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
+    >
+        <Disclosure v-slot="{ open }">
+            <DisclosureButton
+                class="w-full flex place-items-center justify-between p-2"
+            >
+                <span class="px-1 text-lg sm:text-xl font-bold text-left">ДЕМО</span>
+                <font-awesome-icon icon="fa-solid fa-angle-down" :class="open ? 'rotate-180 transform' : ''" class="shrink-0 h-8 w-8" />
+            </DisclosureButton>
+            <DisclosurePanel class="flex flex-col p-2 pt-0">
+                <button
+                    v-for="game in games_demo" :key="game.id"
+                    type="button"
+                    @click="openModal(game)"
+                    class="flex justify-between place-items-center rounded-lg mt-2 p-2 bg-pwsi-2"
+                >
+                    <span class="px-1 sm:text-lg font-bold text-left">{{ game.name }}</span>
+                    <span class="hidden sm:inline px-1 text-sm sm:text-base font-bold text-end" v-if="game.status">{{ game.status }}</span>
+                </button>
+            </DisclosurePanel>
+        </Disclosure>
+    </div>
+
     <TransitionRoot appear :show="isOpen" as="template">
         <Dialog as="div" @close="closeModal" class="relative z-50">
             <TransitionChild
@@ -272,14 +298,16 @@
     const genres = ref([])
     const games_main = ref([])
     const games_ordered = ref([])
+    const games_demo = ref([])
 
     onBeforeMount(async () => {
         genres.value = (await get_from_api('/games/genres?genre=main')).value
     
-        const games = await get_from_api('/games?types=main&types=ordered')
+        const games = await get_from_api('/games?types=main&types=ordered&types=demo')
         if (games) {
             games_main.value = games.value.main
             games_ordered.value = games.value.ordered
+            games_demo.value = games.value.demo
         }
     })
 
