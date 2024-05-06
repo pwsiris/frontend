@@ -259,5 +259,6 @@
     const status_mapping = new Map();
     status_mapping.set("Просмотрено", "text-pwsi-done");
     status_mapping.set("Смотрим", "text-pwsi-in-progress");
+    status_mapping.set("Заброшено", "text-pwsi-dropped");
 
 </script>
