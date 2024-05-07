@@ -9,30 +9,30 @@
             <font-awesome-icon icon="fa-brands fa-myanimelist" class="h-8 w-auto align-middle mr-1" />(аниме лист),
         </a>
         а ещё веские доказательства:
-        <a
-            href="https://clips.twitch.tv/BlueDifficultMarjoramCclamChamp-YOZfdjLkpu7WBF2G"
-            target="_blank" rel="noreferrer"
+        <button
+            type="button"
             class="text-pwsi-link"
+            @click="openModal(emptyModel, 'https://clips.twitch.tv/embed?clip=BlueDifficultMarjoramCclamChamp-YOZfdjLkpu7WBF2G')"
         >
-            <font-awesome-icon icon="fa-brands fa-twitch" class="align-middle mr-1" />раз,
-        </a>
-        <a
-            href="https://clips.twitch.tv/GlamorousFragileAntelopeBrokeBack-KzY4m4ERMUdbNfaB"
-            target="_blank" rel="noreferrer"
+            <font-awesome-icon icon="fa-brands fa-twitch" class="align-middle mr-1" />раз
+        </button>, 
+        <button
+            type="button"
             class="text-pwsi-link"
+            @click="openModal(emptyModel, 'https://clips.twitch.tv/embed?clip=GlamorousFragileAntelopeBrokeBack-KzY4m4ERMUdbNfaB')"
         >
             <font-awesome-icon icon="fa-brands fa-twitch" class="align-middle mr-1" />два
-        </a>
+        </button>
         и
-        <a
-            href="https://clips.twitch.tv/SourHandsomeBeanPanicBasket-TZFX_L_d7O7j80XJ"
-            target="_blank" rel="noreferrer"
+        <button
+            type="button"
             class="text-pwsi-link"
+            @click="openModal(emptyModel, 'https://clips.twitch.tv/embed?clip=SourHandsomeBeanPanicBasket-TZFX_L_d7O7j80XJ')"
         >
-            <font-awesome-icon icon="fa-brands fa-twitch" class="align-middle mr-1" />три.
-        </a>
+            <font-awesome-icon icon="fa-brands fa-twitch" class="align-middle mr-1" />три
+        </button>.
         Хотя главным доказательством является сам факт существования данной страницы...
-        А ещё, аниме можно заказать <button type="button" @click="openModal(emptyModel)" class="text-pwsi-link">(тык)</button>.
+        А ещё, аниме можно заказать <button type="button" @click="openModal(emptyModel, '')" class="text-pwsi-link">(тык)</button>.
     </div>
 
     <div
@@ -43,16 +43,19 @@
         <div v-if="anime.series !== null">
             <Disclosure v-slot="{ open }">
                 <DisclosureButton
-                    class="w-full flex place-items-center justify-between p-2"
+                    class="w-full flex place-items-center justify-between p-2 select-text"
                 >
                     <span class="px-1 text-lg sm:text-xl font-bold text-left">{{ anime.name }}</span>
-                    <font-awesome-icon icon="fa-solid fa-angle-down" :class="open ? 'rotate-180 transform' : ''" class="shrink-0 h-8 w-8" />
+                    <div class="flex pl-1 place-items-center">
+                        <span class="mr-2 sm:text-lg font-bold" v-if="anime.score">{{ anime.score }}/10</span>
+                        <font-awesome-icon icon="fa-solid fa-angle-down" :class="open ? 'rotate-180 transform' : ''" class="shrink-0 h-8 w-8" />
+                    </div>
                 </DisclosureButton>
                 <DisclosurePanel class="flex flex-col p-2 pt-0">
                     <button
                         v-for="sub_anime in anime.list" :key="sub_anime.id"
                         type="button"
-                        @click="openModal(sub_anime)"
+                        @click="openModal(sub_anime, '')"
                         class="flex justify-between place-items-center rounded-lg mt-2 bg-pwsi-2 p-2"
                         :class="status_mapping.has(sub_anime.status) ? status_mapping.get(sub_anime.status) : 'text-pwsi-text'"
                     >
@@ -65,7 +68,7 @@
         <div v-else>
             <button 
                 type="button"
-                @click="openModal(anime)"
+                @click="openModal(anime, '')"
                 class="flex w-full justify-between place-items-center p-2"
             >
                 <span class="px-1 text-lg sm:text-xl font-bold text-left">{{ anime.name }}</span>
@@ -103,7 +106,19 @@
                     >
                         <DialogPanel
                             class="transform overflow-hidden rounded-2xl text-pwsi-text bg-pwsi-1 shadow-xl transition-all"
-                            :class="dataModal.name !== '' ? 'w-4/5 sm:w-1/2' : ''"
+                            :class="
+                                dataModal.name == ''
+                                ?
+                                (
+                                    dataModal.iframe_link !== ''
+                                    ?
+                                    'w-full sm:w-3/4'
+                                    :
+                                    ''
+                                )
+                                :
+                                'w-4/5 sm:w-1/2'
+                            "
                         >
                             <div v-if="dataModal.name !== ''" class="flex flex-col sm:flex-row sm:justify-end">
                                 <img v-if="dataModal.picture" :src="dataModal.picture" class="sm:order-last w-full h-auto sm:w-auto sm:h-96" />
@@ -124,7 +139,7 @@
                                     <p v-if="dataModal.comment"><span class="font-bold">Комментарий: </span>{{ dataModal.comment }}</p>
                                 </div>
                             </div>
-                            <div v-else class="p-4">
+                            <div v-else-if="dataModal.name == '', dataModal.iframe_link == ''" class="p-4">
                                 <div class="text-xl font-bold text-center">Критерии:</div>
                                 <ul class="list-disc ml-3 sm:ml-5 sm:text-lg text-justify">
                                     <li>Сначала обсудить аниму с Миром (mirakzen), только потом донат</li>
@@ -145,6 +160,9 @@
                                     <li>100р - в аниме больше 48 серий</li>
                                     <li>150р - в аниме больше 48 серий, но заказывается меньше 48 серий</li>
                                 </ul>
+                            </div>
+                            <div v-else-if="dataModal.name == '', dataModal.iframe_link !== ''">
+                                <iframe :src="dataModal.iframe_link" frameborder="0" allowfullscreen="true" allow="autoplay" scrolling="no" class="w-full aspect-video"></iframe>
                             </div>
                         </DialogPanel>
                     </TransitionChild>
@@ -192,7 +210,12 @@
         dataModal.value.padding = "";
         // URL.revokeObjectURL(dataModal.value.picture)
     }
-    function openModal(anime_info) {
+    function openModal(anime_info, iframe_link) {
+        if (iframe_link) {
+            anime_info.iframe_link = iframe_link + `&autoplay=true&parent=${window.location.hostname}`
+        } else {
+            anime_info.iframe_link = ""
+        }
         isOpen.value = true;
         dataModal.value = JSON.parse(JSON.stringify(anime_info));
 
@@ -236,5 +259,6 @@
     const status_mapping = new Map();
     status_mapping.set("Просмотрено", "text-pwsi-done");
     status_mapping.set("Смотрим", "text-pwsi-in-progress");
+    status_mapping.set("Заброшено", "text-pwsi-dropped");
 
 </script>
