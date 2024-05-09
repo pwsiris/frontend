@@ -184,12 +184,20 @@
                                     <p v-if="dataModal.order_by"><span class="font-bold">Заказчик: </span>{{ dataModal.order_by }}</p>
                                     <p v-if="dataModal.status"><span class="font-bold">Статус: </span>{{ dataModal.status }}</p>
                                     <p v-if="dataModal.comment"><span class="font-bold">Комментарий: </span>{{ dataModal.comment }}</p>
-                                    <a v-if="dataModal.records && dataModal.records.includes('http')" :href="dataModal.records" class="font-bold text-pwsi-link" target="_blank" rel="noreferrer">
-                                        Записи <font-awesome-icon icon="fa-solid fa-arrow-up-right-from-square" class="h-3 w-auto align-middle" />
-                                    </a>
-                                    <p v-if="dataModal.records && !dataModal.records.includes('http')" :href="dataModal.records">
-                                        <span class="font-bold">Записи: </span>{{ dataModal.records }}
-                                    </p>
+                                    <div v-if="dataModal.records" class="flex flex-wrap justify-center">
+                                        <span class="font-bold mr-2">Записи:</span>
+                                        <div
+                                            v-for="record in dataModal.records" :key="record.name"
+                                            :class="(dataModal.records.length > 1 && record.order != dataModal.records.length) ? 'mr-3' : ''"
+                                        >
+                                            <a v-if="record.url.includes('http')" :href="record.url" class="font-bold text-pwsi-link" target="_blank" rel="noreferrer">
+                                                {{ record.name }} <font-awesome-icon icon="fa-solid fa-arrow-up-right-from-square" class="h-3 w-auto align-middle" />
+                                            </a>
+                                            <p v-if="!record.url.includes('http')" class="text-wrap">
+                                                {{ record.name }}: {{ record.url }}
+                                            </p>
+                                        </div>
+                                    </div>
                                     <button className="h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
                                 </div>
                             </div>
@@ -274,7 +282,7 @@
         status: '',
         genre: '',
         type: '',
-        records: '',
+        records: [],
         comment: '',
         order_by: '',
         padding: ''
