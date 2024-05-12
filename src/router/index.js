@@ -68,6 +68,22 @@ const router = createRouter({
             }
         },
         {
+            path: "/roulette",
+            name: 'RouletteView',
+            component: () => import('../views/Roulette.vue'),
+            meta: {
+                title: 'Рулетка | Iris_ti'
+            }
+        },
+        {
+            path: "/gallery",
+            name: 'GalleryView',
+            component: () => import('../views/Gallery.vue'),
+            meta: {
+                title: 'Рулетка | Iris_ti'
+            }
+        },
+        {
             path: "/:pathMatch(.*)*",
             name: 'ErrorView',
             component: () => import('../views/NotFound.vue'),
