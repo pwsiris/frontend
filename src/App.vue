@@ -1,7 +1,7 @@
 <template>
     <header>
         <nav class="mx-auto flex items-center justify-between max-w-screen-2xl p-6 lg:px-8" aria-label="Global">
-            <router-link to="/" class="flex md:flex-1 z-30 -m-1.5 p-1.5">
+            <router-link to="/" class="flex md:flex-1 z-30">
                 <img class="h-10 sm:h-12 lg:h-14 w-auto rounded-full" :src="'/static/images/avatar.png'" alt="" />
             </router-link>
 
@@ -11,8 +11,32 @@
                 </button>
             </div>
 
-            <PopoverGroup class="hidden lg:flex lg:gap-x-12 text-lg font-semibold leading-6 z-10">
-                <router-link v-for="link in links" :key="link.url" :to="link.url">{{ link.name }}</router-link>
+            <PopoverGroup class="hidden lg:flex lg:gap-x-8 xl:gap-x-12 text-lg font-semibold leading-6 z-10">
+                <div v-for="link in header_links" :key="link.name">
+                    <router-link v-if="link.url" :key="link.url" :to="link.url">{{ link.name }}</router-link>
+                    <Popover v-else class="relative">
+                        <PopoverButton class="flex items-center gap-x-1 pointer-events-auto">
+                            {{ link.name }}<font-awesome-icon icon="fa-solid fa-angle-down" class="h-3 w-3 flex-none" aria-hidden="true"/>
+                        </PopoverButton>
+
+                        <transition 
+                            enter-active-class="transition ease-out duration-200"
+                            enter-from-class="opacity-0 translate-y-1"
+                            enter-to-class="opacity-100 translate-y-0"
+                            leave-active-class="transition ease-in duration-150"
+                            leave-from-class="opacity-100 translate-y-0"
+                            leave-to-class="opacity-0 translate-y-1"
+                        >
+                            <PopoverPanel v-slot="{ close }" class="absolute -right-0 top-full max-w-md z-10 mt-3 overflow-hidden rounded-lg bg-pwsi-1 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow">
+                                <div class="p-2 flex flex-col">
+                                    <router-link @click="close()" v-for="sublink in link.submenu_links" :key="sublink.url" :to="sublink.url" class="p-4 flex items-center">
+                                        <font-awesome-icon :icon="sublink.icon" class="w-5 h-5 mr-2" />{{ sublink.name }}
+                                    </router-link>
+                                </div>
+                            </PopoverPanel>
+                        </transition>
+                    </Popover>
+                </div>
             </PopoverGroup>
 
             <!-- <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4 z-10"></div> -->
@@ -29,13 +53,33 @@
                 <div class="mt-6 flow-root">
                     <div class="-my-6 divide-y divide-pwsi-text/5">
                         <div class="space-y-2 py-6">
-                            <router-link
-                                v-for="link in links"
-                                :key="link.url"
-                                :to="link.url"
-                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7"
-                                @click="mobileMenuOpen = false"
-                            >{{ link.name }}</router-link>
+                            <div v-for="link in header_links" :key="link.name">
+                                <router-link
+                                    v-if="link.url"
+                                    :key="link.url"
+                                    :to="link.url"
+                                    @click="mobileMenuOpen = false"
+                                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7"
+                                >
+                                    {{ link.name }}
+                                </router-link>
+                                <Disclosure v-else as="div" class="-mx-3 px-3 py-2" v-slot="{ open }">
+                                    <DisclosureButton class="flex w-full items-center rounded-lg text-base font-semibold leading-7">
+                                        {{ link.name }}<font-awesome-icon icon="fa-solid fa-angle-down" class="h-4 w-4 flex-none ml-2" :class="open ? 'rotate-180 transform' : ''" aria-hidden="true"/>
+                                    </DisclosureButton>
+                                    <DisclosurePanel v-slot="{ close }" class="mt-2 rounded-lg bg-pwsi-1">
+                                        <router-link
+                                            v-for="sublink in link.submenu_links"
+                                            :key="sublink.url"
+                                            :to="sublink.url"
+                                            @click="mobileMenuOpen = false; close()"
+                                            class="p-4 text-base font-semibold leading-7 flex items-center"
+                                        >
+                                            <font-awesome-icon :icon="sublink.icon" class="w-5 h-5 mr-2" />{{ sublink.name }}
+                                        </router-link>
+                                    </DisclosurePanel>
+                                </Disclosure>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,7 +123,7 @@
         Switch,
     } from '@headlessui/vue'
 
-    const links = [
+    const header_links = [
         {
             name: "Обо мне",
             url: "/lore"
@@ -103,6 +147,21 @@
         {
             name: "Ня анимесса",
             url: "/anime"
+        },
+        {
+            name: "Всякое",
+            submenu_links: [
+                {
+                    name: "Рулетка",
+                    url: "/roulette",
+                    icon: "fa-solid fa-roulette"
+                },
+                {
+                    name: "Галерея",
+                    url: "/gallery",
+                    icon: "fa-solid fa-images"
+                }
+            ]
         }
     ]
 

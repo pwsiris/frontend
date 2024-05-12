@@ -48,7 +48,7 @@
                     <span class="px-1 text-lg sm:text-xl font-bold text-left">{{ anime.name }}</span>
                     <div class="flex pl-1 place-items-center">
                         <span class="mr-2 sm:text-lg font-bold" v-if="anime.score">{{ anime.score }}/10</span>
-                        <font-awesome-icon icon="fa-solid fa-angle-down" :class="open ? 'rotate-180 transform' : ''" class="shrink-0 h-8 w-8" />
+                        <font-awesome-icon icon="fa-solid fa-angle-down" :class="open ? 'rotate-180 transform' : ''" class="shrink-0 h-6 w-5 sm:h-7 sm:w-6" />
                     </div>
                 </DisclosureButton>
                 <DisclosurePanel class="flex flex-col p-2 pt-0">
