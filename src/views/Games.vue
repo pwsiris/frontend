@@ -40,7 +40,7 @@
             class="mt-4"
         >
             <button
-                v-for="game in (games_ordered.concat(games_main)).filter((item) => item.name.toLowerCase().includes(search_string.toLowerCase()))"
+                v-for="game in games_ordered.concat(games_main).concat(games_demo).filter((item) => item.name.toLowerCase().includes(search_string.toLowerCase()))"
                 :key="game.id"
                 type="button"
                 @click="openModal(game)"
