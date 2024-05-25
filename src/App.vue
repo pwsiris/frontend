@@ -160,6 +160,11 @@
                     name: "Галерея",
                     url: "/gallery",
                     icon: "fa-solid fa-images"
+                },
+                {
+                    name: "Машинный перевод",
+                    url: "/machine-translation",
+                    icon: "fa-solid fa-language"
                 }
             ]
         }
