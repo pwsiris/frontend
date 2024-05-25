@@ -84,6 +84,14 @@ const router = createRouter({
             }
         },
         {
+            path: "/machine-translation",
+            name: 'MachineTranslationView',
+            component: () => import('../views/MachineTranslation.vue'),
+            meta: {
+                title: 'Машинный перевод | Iris_ti'
+            }
+        },
+        {
             path: "/:pathMatch(.*)*",
             name: 'ErrorView',
             component: () => import('../views/NotFound.vue'),

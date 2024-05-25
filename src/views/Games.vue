@@ -179,7 +179,7 @@
                                     >
                                         {{ dataModal.name }}
                                     </a>
-                                    <p v-if="isHidden && dataModal.type === 'ordered'" class="font-bold">ТЕКУЩИЙ ЗАКАЗ</p>
+                                    <p v-if="isHidden && type_mapping.has(dataModal.type)"><span class="font-bold">Категория: </span>{{ type_mapping.get(dataModal.type) }}</p>
                                     <p v-if="isHidden"><span class="font-bold">Жанр: </span>{{ dataModal.genre }}</p>
                                     <p v-if="dataModal.order_by"><span class="font-bold">Заказчик: </span>{{ dataModal.order_by }}</p>
                                     <p v-if="dataModal.status"><span class="font-bold">Статус: </span>{{ dataModal.status }}</p>
@@ -327,4 +327,8 @@
     status_mapping.set("Первый взгляд", "text-pwsi-first-look");
     status_mapping.set("Заброшено", "text-pwsi-dropped");
     status_mapping.set("Даже начинать не будем", "text-pwsi-dropped");
+
+    const type_mapping = new Map();
+    type_mapping.set("ordered", "Заказы");
+    type_mapping.set("demo", "Демо");
 </script>
