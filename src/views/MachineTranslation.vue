@@ -73,6 +73,7 @@
 
         <p class="mt-2">
             <span class="font-bold">5.</span> В следующем окне выбираем вариант “По умолчанию”
+            (если вы точно знаете, как выглядят субтитры в игре, для лучшего перевода выбирайте вариант из предложенных)
         </p>
         <img :src="images[5]" class="mx-auto mt-2 p-1 pb-1 bg-gray-600 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow" />
 
