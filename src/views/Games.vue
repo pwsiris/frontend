@@ -181,7 +181,9 @@
                                     </a>
                                     <p v-if="isHidden && type_mapping.has(dataModal.type)"><span class="font-bold">Категория: </span>{{ type_mapping.get(dataModal.type) }}</p>
                                     <p v-if="isHidden"><span class="font-bold">Жанр: </span>{{ dataModal.genre }}</p>
-                                    <p v-if="dataModal.order_by"><span class="font-bold">Заказчик: </span>{{ dataModal.order_by }}</p>
+                                    <p v-if="dataModal.gift_by && dataModal.order_by && dataModal.gift_by === dataModal.order_by"><span class="font-bold">Подарок+заказ: </span>{{ dataModal.order_by }}</p>
+                                    <p v-if="dataModal.gift_by && dataModal.gift_by !== dataModal.order_by"><span class="font-bold">Подарок: </span>{{ dataModal.gift_by }}</p>
+                                    <p v-if="dataModal.order_by && dataModal.gift_by !== dataModal.order_by"><span class="font-bold">Заказ: </span>{{ dataModal.order_by }}</p>
                                     <p v-if="dataModal.status"><span class="font-bold">Статус: </span>{{ dataModal.status }}</p>
                                     <p v-if="dataModal.comment"><span class="font-bold">Комментарий: </span>{{ dataModal.comment }}</p>
                                     <div v-if="dataModal.records" class="flex flex-wrap justify-center">
@@ -284,6 +286,7 @@
         type: '',
         records: [],
         comment: '',
+        gift_by: '',
         order_by: '',
         padding: ''
     }
