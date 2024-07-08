@@ -130,7 +130,7 @@
                                         <div v-if="dataModal.series" class="font-bold">{{ dataModal.series }}</div>
                                         <div :class="dataModal.series ? 'mt-1' : 'font-bold'">{{ dataModal.name }}</div>
                                     </a>
-                                    <div><span class="font-bold">Заказчик: </span>{{ dataModal.order_by }}</div>
+                                    <div v-if="dataModal.order_by"><span class="font-bold">Заказчик: </span>{{ dataModal.order_by }}</div>
                                     <p v-if="dataModal.status === 'Смотрим'"><span class="font-bold">Статус: </span>{{ dataModal.status }}</p>
                                     <p v-if="dataModal.completed_time && dataModal.status === 'Просмотрено'"><span class="font-bold">Просмотр закончен: </span>{{ dataModal.completed_time }} </p>
                                     <p v-if="dataModal.voice_acting"><span class="font-bold">Озвучка: </span>{{ dataModal.voice_acting }}</p>
@@ -259,6 +259,7 @@
     const status_mapping = new Map();
     status_mapping.set("Просмотрено", "text-pwsi-done");
     status_mapping.set("Смотрим", "text-pwsi-in-progress");
+    status_mapping.set("Смотрю", "text-pwsi-in-progress");
     status_mapping.set("Заброшено", "text-pwsi-dropped");
 
 </script>
