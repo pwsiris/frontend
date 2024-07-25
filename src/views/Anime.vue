@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto text-lg font-bold mt-4 mb-8 text-justify">
+    <div class="mx-auto text-lg font-bold mt-4 mb-4 text-justify">
         Стримлер не анимесса (анимесса), поэтому у неё есть
         <a
             href="https://myanimelist.net/profile/Iris_ti"
@@ -35,13 +35,26 @@
         А ещё, аниме можно заказать <button type="button" @click="openModal(emptyModel, '')" class="text-pwsi-link">(тык)</button>.
     </div>
 
+    <div class="flex justify-center mb-2">
+        <input
+            @input="update_search"
+            @keyup.enter="fake_submit()"
+            placeholder="Поиск аниме..."
+            id="search_input"
+            class="focus:outline-none w-4/5 sm:w-1/3 p-2 pr-8 rounded-lg text-pwsi-text bg-pwsi-1 border-2 border-pwsi-2"
+        />
+            <button @click="search_reset()">
+                <font-awesome-icon icon="fa-solid fa-xmark" class="h-6 w-auto align-middle -ml-9" />
+            </button>
+    </div>
+
     <div
-        v-for="anime in all_anime.value" :key="anime.name"
+        v-for="anime in all_anime_filtered.value" :key="anime.name"
         class="rounded-lg mt-2 bg-pwsi-1 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
         :class="status_mapping.has(anime.status) ? status_mapping.get(anime.status) : ''"
     >
-        <div v-if="anime.series !== null">
-            <Disclosure v-slot="{ open }">
+        <div v-if="anime.series !== null" :key="is_search">
+            <Disclosure v-slot="{ open }" :default-open="search_string ? true : false">
                 <DisclosureButton
                     class="w-full flex place-items-center justify-between p-2 select-text"
                 >
@@ -186,6 +199,56 @@
     } from '@headlessui/vue'
     import get_from_api from '@/utils/get_from_api'
 
+    const is_search = ref(false)
+    const search_string = ref('');
+
+    function update_search(event) {
+        search_string.value = event.target.value;
+
+        if (search_string.value) {
+            const filtered_anime = []
+
+            const anime_all = JSON.parse(JSON.stringify(all_anime.value.value));
+            for (const anime of anime_all) {
+                if (anime.name.toLowerCase().includes(search_string.value.toLowerCase())) {
+                    filtered_anime.push(anime)
+                } else {
+                    if (anime.series !== null) {
+                        const sub_anime_list = []
+
+                        for (const sub_anime of anime.list) {
+                            if (sub_anime.name.toLowerCase().includes(search_string.value.toLowerCase())) {
+                                sub_anime_list.push(sub_anime)
+                            }
+                        }
+
+                        if (sub_anime_list.length != 0) {
+                            anime.list = sub_anime_list
+                            filtered_anime.push(anime)
+                        }
+                    }
+                }
+            }
+            all_anime_filtered.value.value = filtered_anime
+            is_search.value = true
+        } else {
+            search_string.value = '';
+            all_anime_filtered.value.value = all_anime.value.value
+            is_search.value = false
+        }
+    }
+
+    function search_reset() {
+        document.getElementById("search_input").value = "";
+        search_string.value = '';
+        all_anime_filtered.value.value = all_anime.value.value
+        is_search.value = false
+    }
+
+    function fake_submit() {
+        document.getElementById("search_input").blur();
+    }
+
     const isOpen = ref(false)
     const emptyModel = {
         name: '',
@@ -251,9 +314,11 @@
     }
 
     const all_anime = ref([])
+    const all_anime_filtered = ref([])
 
     onBeforeMount(async () => {
         all_anime.value = await get_from_api('/anime')
+        all_anime_filtered.value.value = all_anime.value.value
     })
 
     const status_mapping = new Map();
