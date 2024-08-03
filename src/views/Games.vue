@@ -30,17 +30,17 @@
                 id="search_input"
                 class="focus:outline-none w-4/5 sm:w-1/3 p-2 pr-8 rounded-lg text-pwsi-text bg-pwsi-1 border-2 border-pwsi-2"
             />
-                <button @click="search_reset()">
-                    <font-awesome-icon icon="fa-solid fa-xmark" class="h-6 w-auto align-middle -ml-9" />
-                </button>
+            <button @click="search_reset()">
+                <font-awesome-icon icon="fa-solid fa-xmark" class="h-6 w-auto align-middle -ml-9" />
+            </button>
         </div>
 
         <div
-            v-if="isHidden"
+            v-if="is_search"
             class="mt-4"
         >
             <button
-                v-for="game in games_ordered.concat(games_main).concat(games_demo).filter((item) => item.name.toLowerCase().includes(search_string.toLowerCase()))"
+                v-for="game in filtered_anime"
                 :key="game.id"
                 type="button"
                 @click="openModal(game)"
@@ -55,7 +55,7 @@
 
     <div
         v-if="games_ordered.length !== 0" 
-        :class="isHidden ? 'hidden' : ''"
+        :class="is_search ? 'hidden' : ''"
         class="rounded-lg bg-pwsi-1 mb-8 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
     >
         <Disclosure v-slot="{ open }" defaultOpen>
@@ -82,7 +82,7 @@
 
     <div
         v-for="genre in genres" :key="genre"
-        :class="isHidden ? 'hidden' : ''"
+        :class="is_search ? 'hidden' : ''"
         class="rounded-lg bg-pwsi-1 mt-2 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
     >
         <Disclosure v-slot="{ open }">
@@ -111,7 +111,7 @@
 
     <div
         v-if="games_demo.length !== 0" 
-        :class="isHidden ? 'hidden' : ''"
+        :class="is_search ? 'hidden' : ''"
         class="rounded-lg bg-pwsi-1 mt-10 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
     >
         <Disclosure v-slot="{ open }">
@@ -179,8 +179,8 @@
                                     >
                                         {{ dataModal.name }}
                                     </a>
-                                    <p v-if="isHidden && type_mapping.has(dataModal.type)"><span class="font-bold">Категория: </span>{{ type_mapping.get(dataModal.type) }}</p>
-                                    <p v-if="isHidden"><span class="font-bold">Жанр: </span>{{ dataModal.genre }}</p>
+                                    <p v-if="is_search && type_mapping.has(dataModal.type)"><span class="font-bold">Категория: </span>{{ type_mapping.get(dataModal.type) }}</p>
+                                    <p v-if="is_search"><span class="font-bold">Жанр: </span>{{ dataModal.genre }}</p>
                                     <p v-if="dataModal.gift_by && dataModal.order_by && dataModal.gift_by === dataModal.order_by"><span class="font-bold">Подарок+заказ: </span>{{ dataModal.order_by }}</p>
                                     <p v-if="dataModal.gift_by && dataModal.gift_by !== dataModal.order_by"><span class="font-bold">Подарок: </span>{{ dataModal.gift_by }}</p>
                                     <p v-if="dataModal.order_by && dataModal.gift_by !== dataModal.order_by"><span class="font-bold">Заказ: </span>{{ dataModal.order_by }}</p>
@@ -252,22 +252,45 @@
     } from '@headlessui/vue'
     import get_from_api from '@/utils/get_from_api'
     
+    const filtered_anime = ref([])
     const search_string = ref('');
-    const isHidden = ref(false);
+    const is_search = ref(false);
 
     function update_search(event) {
         search_string.value = event.target.value;
         if (search_string.value) {
-            isHidden.value = true;
+            is_search.value = true;
+            filtered_anime.value = games_ordered.value.concat(games_main.value).concat(games_demo.value).filter((item) => search_filter(item))
         } else {
-            isHidden.value = false;
+            is_search.value = false;
+            filtered_anime.value = []
         }
+    }
+
+    function search_filter(game) {
+        var search_string_filter = (" " + search_string.value).slice(1)
+        if (["не начато", "не начали", "не играли", "не тронуто", "не трогали", '""'].includes(search_string.value.toLowerCase())) {
+            search_string_filter = ""
+        }
+        const game_status = game.status || ""
+        const game_type = game.type || ""
+
+        return search_string && (
+            game.name.toLowerCase().includes(search_string.value.toLowerCase())
+            ||
+            (
+                game_type.toLowerCase() != "demo"
+                &&
+                game_status.toLowerCase() == search_string_filter.toLowerCase()
+            )
+        )
     }
 
     function search_reset() {
         document.getElementById("search_input").value = "";
         search_string.value = "";
-        isHidden.value = false;
+        filtered_anime.value = []
+        is_search.value = false;
     }
 
     function fake_submit() {
@@ -334,4 +357,5 @@
     const type_mapping = new Map();
     type_mapping.set("ordered", "Заказы");
     type_mapping.set("demo", "Демо");
+
 </script>
