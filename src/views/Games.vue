@@ -40,7 +40,7 @@
             class="mt-4"
         >
             <button
-                v-for="game in filtered_anime"
+                v-for="game in filtered_games"
                 :key="game.id"
                 type="button"
                 @click="openModal(game)"
@@ -252,7 +252,7 @@
     } from '@headlessui/vue'
     import get_from_api from '@/utils/get_from_api'
     
-    const filtered_anime = ref([])
+    const filtered_games = ref([])
     const search_string = ref('');
     const is_search = ref(false);
 
@@ -260,10 +260,10 @@
         search_string.value = event.target.value;
         if (search_string.value) {
             is_search.value = true;
-            filtered_anime.value = games_ordered.value.concat(games_main.value).concat(games_demo.value).filter((item) => search_filter(item))
+            filtered_games.value = games_ordered.value.concat(games_main.value).concat(games_demo.value).filter((item) => search_filter(item))
         } else {
             is_search.value = false;
-            filtered_anime.value = []
+            filtered_games.value = []
         }
     }
 
@@ -289,7 +289,7 @@
     function search_reset() {
         document.getElementById("search_input").value = "";
         search_string.value = "";
-        filtered_anime.value = []
+        filtered_games.value = []
         is_search.value = false;
     }
 
