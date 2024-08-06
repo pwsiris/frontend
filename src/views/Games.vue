@@ -268,8 +268,9 @@
     }
 
     function search_filter(game) {
+        const not_played_statuses = ["не начато", "не начали", "не играли", "не тронуто", "не трогали", '""']
         var search_string_filter = (" " + search_string.value).slice(1)
-        if (["не начато", "не начали", "не играли", "не тронуто", "не трогали", '""'].includes(search_string.value.toLowerCase())) {
+        if (not_played_statuses.includes(search_string.value.toLowerCase())) {
             search_string_filter = ""
         }
         const game_status = game.status || ""
@@ -279,7 +280,7 @@
             game.name.toLowerCase().includes(search_string.value.toLowerCase())
             ||
             (
-                game_type.toLowerCase() != "demo"
+                (game_type.toLowerCase() != "demo" || game_status.toLowerCase() != "")
                 &&
                 game_status.toLowerCase() == search_string_filter.toLowerCase()
             )
