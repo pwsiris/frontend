@@ -3,7 +3,7 @@ import {ref} from 'vue';
 
 
 export default async function get_from_api(route) {
-    const data = ref([])
+    var data = ref(null)
 
     var url_string = `/api${route}`
     if (
@@ -23,12 +23,11 @@ export default async function get_from_api(route) {
             }
         ).catch(
             function (error) {
-                data.value = []
+                data.value = null
             }
         )
     } catch (e) {
-        data.value = [];
+        data.value = null;
     }
     return data
 }
-``

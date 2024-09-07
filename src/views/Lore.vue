@@ -43,7 +43,7 @@
     const lore = ref([])
 
     onBeforeMount(async () => {
-        lore.value = (await get_from_api('/lore')).value
+        lore.value = (await get_from_api('/lore')).value || []
 
         for (const [i, block_value] of lore.value.entries()) {
             if (i == 0) {

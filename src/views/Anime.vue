@@ -318,7 +318,7 @@
 
     onBeforeMount(async () => {
         all_anime.value = await get_from_api('/anime')
-        all_anime_filtered.value.value = all_anime.value.value
+        all_anime_filtered.value.value = all_anime.value.value || []
     })
 
     const status_mapping = new Map();
