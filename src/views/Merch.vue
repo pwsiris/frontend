@@ -19,7 +19,7 @@
             v-for="merch_item in merch" :key="merch_item.id"
             class="w-full sm:w-1/2 xl:w-1/3 mx-auto"
         >
-            <div class="h-full sm:p-5">
+            <div class="h-full py-2 sm:p-4">
                 <div class="h-full overflow-hidden bg-pwsi-1 rounded-lg shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow">
                     <div class="h-full p-2 flex flex-col">
                         <div class="w-full aspect-square flex border-b-2 border-pwsi-2 relative">
