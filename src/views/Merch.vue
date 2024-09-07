@@ -3,13 +3,7 @@
         Хотите потискать Ириску? Это вполне возможно - у нас есть мерч!
         Нюансы заказов указаны <button type="button" @click="openModal()" class="text-pwsi-link">ТУТ (тык)</button>.
         По всем вопросам и заказам обращаться к стримеру в лс
-        <a
-            href="https://discord.gg/cwZvAkuhp4"
-            target="_blank" rel="noreferrer"
-            class="text-pwsi-link"
-        >
-            <font-awesome-icon icon="fa-brands fa-discord" class="h-5 w-auto align-middle mr-1" />через сервер дискорда
-        </a>
+        <span class="text-pwsi-link"><font-awesome-icon icon="fa-brands fa-discord" class="h-5 w-auto align-middle mr-1" />дискорда (Iris_ti)</span>
         или
         <a
             href="https://vk.com/iris_ti"
@@ -90,10 +84,10 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="transform overflow-hidden rounded-2xl bg-pwsi-1 text-pwsi-text shadow-xl transition-all"
+                            class="transform overflow-hidden rounded-2xl bg-pwsi-1 text-pwsi-text shadow-xl transition-all w-full sm:w-4/5 lg:w-3/4"
                         >
-                            <div class="p-4">
-                                <ul class="list-disc ml-3 sm:ml-5 sm:text-lg text-justify">
+                            <div class="p-6 pb-1">
+                                <ul class="list-disc ml-3 sm:ml-5 sm:text-lg text-justify space-y-2">
                                     <li>Оформление мерча происходит по предзаказам (сроки ищите в соцсетях)</li>
                                     <li>Стоимость указана отдельно для России и Украины, остальные страны - в зависимости от того, откуда будет доставка</li>
                                     <li>Доставка в стоимость не входит - она рассчитывается индивидуально (разные страны, города и т.д.) и оплачивается заказчиком</li>
