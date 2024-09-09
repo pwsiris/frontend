@@ -55,7 +55,7 @@
     })
 
     onBeforeMount(async () => {
-        all_socials.value = (await get_from_api('/socials')).value
+        all_socials.value = (await get_from_api('/socials')).value || []
         for (const social of all_socials.value) {
             if (social.type.includes('main')) {
                 main_link.value = social

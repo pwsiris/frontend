@@ -68,6 +68,14 @@ const router = createRouter({
             }
         },
         {
+            path: "/merch",
+            name: 'MerchView',
+            component: () => import('../views/Merch.vue'),
+            meta: {
+                title: 'Мерч | Iris_ti'
+            }
+        },
+        {
             path: "/roulette",
             name: 'RouletteView',
             component: () => import('../views/Roulette.vue'),

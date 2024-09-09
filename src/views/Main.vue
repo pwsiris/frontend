@@ -43,6 +43,6 @@
     const all_socials = ref([])
 
     onBeforeMount(async () => {
-        all_socials.value = (await get_from_api('/socials')).value
+        all_socials.value = (await get_from_api('/socials')).value || []
     });
 </script>

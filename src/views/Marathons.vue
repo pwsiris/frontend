@@ -140,7 +140,7 @@
 
     const marathons = ref([])
     onBeforeMount(async () => {
-        marathons.value = (await get_from_api('/marathons')).value
+        marathons.value = (await get_from_api('/marathons')).value || []
     })
 
     const status_mapping = new Map();

@@ -39,7 +39,7 @@
     const descriptions = ref([])
 
     onBeforeMount(async () => {   
-        const roulette = (await get_from_api('/roulette')).value
+        const roulette = (await get_from_api('/roulette')).value || []
         awards.value = roulette.awards
         descriptions.value = roulette.descriptions
         const rarities_raw = roulette.rarities

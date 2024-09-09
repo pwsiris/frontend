@@ -11,7 +11,7 @@
                 </button>
             </div>
 
-            <PopoverGroup class="hidden lg:flex lg:gap-x-8 xl:gap-x-12 text-lg font-semibold leading-6 z-10">
+            <PopoverGroup class="hidden lg:flex lg:gap-x-8 xl:gap-x-12 text-lg font-semibold leading-6 z-20">
                 <div v-for="link in header_links" :key="link.name">
                     <router-link v-if="link.url" :key="link.url" :to="link.url">{{ link.name }}</router-link>
                     <Popover v-else class="relative">
@@ -27,7 +27,7 @@
                             leave-from-class="opacity-100 translate-y-0"
                             leave-to-class="opacity-0 translate-y-1"
                         >
-                            <PopoverPanel v-slot="{ close }" class="absolute -right-0 top-full max-w-md z-10 mt-3 overflow-hidden rounded-lg bg-pwsi-1 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow">
+                            <PopoverPanel v-slot="{ close }" class="absolute -right-0 top-full max-w-md z-20 mt-3 overflow-hidden rounded-lg bg-pwsi-1 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow">
                                 <div class="p-2 flex flex-col">
                                     <router-link @click="close()" v-for="sublink in link.submenu_links" :key="sublink.url" :to="sublink.url" class="p-4 flex items-center">
                                         <font-awesome-icon :icon="sublink.icon" class="w-5 h-5 mr-2" />{{ sublink.name }}
@@ -43,8 +43,8 @@
         </nav>
 
         <Dialog as="div" class="lg:hidden text-pwsi-text" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
-            <div class="fixed inset-0 z-10" />
-            <DialogPanel class="fixed inset-y-0 right-0 z-10 overflow-y-auto px-6 py-6 w-1/2 sm:max-w-sm ring-1 ring-pwsi-text/10 bg-pwsi-2 sm:bg-gradient-to-t sm:from-pwsi-2 sm:to-pwsi-1">
+            <div class="fixed inset-0 z-20" />
+            <DialogPanel class="fixed inset-y-0 right-0 z-20 overflow-y-auto px-6 py-6 w-2/3 sm:max-w-sm ring-1 ring-pwsi-text/10 bg-pwsi-2 sm:bg-gradient-to-t sm:from-pwsi-2 sm:to-pwsi-1">
                 <div class="flex flex-row-reverse h-10">
                     <button type="button" class="-m-2.5 p-2.5 rounded-md" @click="mobileMenuOpen = false">
                         <font-awesome-icon icon="fa-solid fa-xmark" class="h-8 w-8 sm:h-12 sm:w-12" aria-hidden="true" />
@@ -134,19 +134,31 @@
         },
         {
             name: "Игры",
-            url: "/games"
-        },
-        {
-            name: "Челенжи",
-            url: "/challenges"
-        },
-        {
-            name: "Марафоны",
-            url: "/marathons"
+            submenu_links: [
+                {
+                    name: "Игры",
+                    url: "/games",
+                    icon: "fa-solid fa-gamepad"
+                },
+                {
+                    name: "Челенжи",
+                    url: "/challenges",
+                    icon: "fa-solid fa-handshake-angle"
+                },
+                {
+                    name: "Марафоны",
+                    url: "/marathons",
+                    icon: "fa-solid fa-list-check"
+                }
+            ]
         },
         {
             name: "Ня анимесса",
             url: "/anime"
+        },
+        {
+            name: "Мерч",
+            url: "/merch"
         },
         {
             name: "Всякое",

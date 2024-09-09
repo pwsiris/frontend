@@ -137,7 +137,7 @@
     const challenges_ordered = ref([])
     onBeforeMount(async () => {
         const challenges = await get_from_api('/challenges?types=main&types=ordered')
-        if (challenges) {
+        if (challenges.value !== null && "main" in challenges.value && "ordered" in challenges.value) {
             challenges_main.value = challenges.value.main
             challenges_ordered.value = challenges.value.ordered
         }
