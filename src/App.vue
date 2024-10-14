@@ -177,6 +177,11 @@
                     name: "Машинный перевод",
                     url: "/machine-translation",
                     icon: "fa-solid fa-language"
+                },
+                {
+                    name: "Сообщение стримеру",
+                    url: "/message",
+                    icon: "fa-solid fa-message"
                 }
             ]
         }

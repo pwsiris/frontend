@@ -100,6 +100,14 @@ const router = createRouter({
             }
         },
         {
+            path: "/message",
+            name: 'MessageView',
+            component: () => import('../views/Message.vue'),
+            meta: {
+                title: 'Сообщения стримеру | Iris_ti'
+            }
+        },
+        {
             path: "/:pathMatch(.*)*",
             name: 'ErrorView',
             component: () => import('../views/NotFound.vue'),
