@@ -14,6 +14,10 @@
         </a>.
     </div>
 
+    <div v-if="merch_status" class="mx-auto text-xl md:text-2xl font-bold mb-4 text-pwsi-link">
+        {{ merch_status }}
+    </div>
+
     <div class="mt-1 flex flex-wrap">
         <div
             v-for="merch_item in merch" :key="merch_item.id"
@@ -133,8 +137,10 @@
     }
 
     const merch = ref([])
+    const merch_status = ref("")
     onBeforeMount(async () => {   
         merch.value = (await get_from_api('/merch')).value || []
+        merch_status.value = (await get_from_api('/merch/status')).value || ""
     })
 
     const sizes_mapping = new Map();
