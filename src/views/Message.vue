@@ -108,18 +108,16 @@
         const title = document.getElementById('title').value
         const description = document.getElementById('description').value
 
-        var modal_message = "Сообщение отправлено";
+        var modal_message = "Произошла ошибка";
 
         if (!description) {
             modal_message = "Нельзя отправить пустое сообщение"
         } else {
             const answer = (await send_to_api('/site/message', {"title": title, "description": description})).value
-            if (answer != "Sended") {
-                if (answer == "DISABLED") {
-                    modal_message = "Отправка сообщений отключена"
-                } else {
-                    modal_message = "Произошла ошибка"
-                }
+            if (answer == "Sended") {
+                modal_message = "Сообщение отправлено";
+            } else if (answer == "DISABLED") {
+                modal_message = "Отправка сообщений отключена"
             }
         }
 
