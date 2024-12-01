@@ -104,7 +104,7 @@ const router = createRouter({
             name: 'MessageView',
             component: () => import('../views/Message.vue'),
             meta: {
-                title: 'Сообщения стримеру | Iris_ti'
+                title: 'Сообщение стримеру | Iris_ti'
             }
         },
         {

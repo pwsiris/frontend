@@ -340,8 +340,8 @@
     
         const games = await get_from_api('/games?types=main&types=ordered&types=demo')
         if (games.value !== null && "main" in games.value && "ordered" in games.value && "demo" in games.value) {
-            games_main.value = games.value.main
             games_ordered.value = games.value.ordered
+            games_main.value = games.value.main
             games_demo.value = games.value.demo
         }
     })
