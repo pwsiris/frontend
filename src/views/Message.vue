@@ -1,10 +1,14 @@
 <template>
+    <div class="mx-auto text-lg font-bold mt-4 mb-4 text-justify">
+        Тут можно передать сообщение стримеру, которое она когда-нибудь обязательно прочитает)
+    </div>
+
     <input
         type="text"
         id="title"
         placeholder="Заголовок"
         :value="title_data.text"
-        class="focus:outline-none mb-4 p-2 rounded-lg text-pwsi-text bg-pwsi-1 border-2 border-pwsi-2"
+        class="focus:outline-none mb-4 p-2 rounded-lg text-pwsi-text bg-pwsi-1 border-2 border-pwsi-2 placeholder:text-pwsi-text"
         :disabled="!title_data.editable"
     />
     <textarea
@@ -12,7 +16,7 @@
         id="description"
         placeholder="Сообщение"
         rows="4"
-        class="focus:outline-none mb-4 p-2 rounded-lg text-pwsi-text bg-pwsi-1 border-2 border-pwsi-2"
+        class="focus:outline-none mb-4 p-2 rounded-lg text-pwsi-text bg-pwsi-1 border-2 border-pwsi-2 placeholder:text-pwsi-text"
         required
     />
     <button 
@@ -120,7 +124,6 @@
                 modal_message = "Отправка сообщений отключена"
             }
         }
-
         openModal(modal_message)
     }
 
