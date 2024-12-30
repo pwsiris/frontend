@@ -120,6 +120,7 @@
             const answer = (await send_to_api('/site/message', {"title": title, "description": description})).value
             if (answer == "Sended") {
                 modal_message = "Сообщение отправлено";
+                document.getElementById('description').value = ""
             } else if (answer == "DISABLED") {
                 modal_message = "Отправка сообщений отключена"
             }
