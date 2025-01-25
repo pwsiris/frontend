@@ -6,7 +6,7 @@
         <button type="button" @click="openModal()" class="text-pwsi-link">(правила проведения).</button>
     </div>
 
-    <div class="flex justify-center mb-2">
+    <div class="flex justify-center">
         <input
             @input="update_search"
             @keyup.enter="fake_submit()"

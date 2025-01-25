@@ -21,42 +21,37 @@
         стима.
     </div>
 
-    <div class="mb-2">
-        <div class="flex justify-center">
-            <input
-                @input="update_search"
-                @keyup.enter="fake_submit()"
-                placeholder="Поиск игр..."
-                id="search_input"
-                class="focus:outline-none w-4/5 sm:w-1/3 p-2 pr-8 rounded-md text-pwsi-text bg-pwsi-1 border-2 border-pwsi-3 placeholder:text-pwsi-text"
-            />
-            <button @click="search_reset()">
-                <font-awesome-icon icon="fa-solid fa-xmark" class="h-6 w-auto align-middle -ml-9" />
-            </button>
-        </div>
+    <div class="flex justify-center mb-2">
+        <input
+            @input="update_search"
+            @keyup.enter="fake_submit()"
+            placeholder="Поиск игр..."
+            id="search_input"
+            class="focus:outline-none w-4/5 sm:w-1/3 p-2 pr-8 rounded-md text-pwsi-text bg-pwsi-1 border-2 border-pwsi-3 placeholder:text-pwsi-text"
+        />
+        <button @click="search_reset()">
+            <font-awesome-icon icon="fa-solid fa-xmark" class="h-6 w-auto align-middle -ml-9" />
+        </button>
+    </div>
 
-        <div
-            v-if="is_search"
-            class="mt-4"
+    <div v-if="is_search">
+        <button
+            v-for="game in filtered_games"
+            :key="game.id"
+            type="button"
+            @click="openModal(game)"
+            class="flex w-full justify-between place-items-center mt-2 p-2 rounded-md bg-pwsi-1 border-2 border-pwsi-3"
+            :class="status_mapping.has(game.status) ? status_mapping.get(game.status) : ''"
         >
-            <button
-                v-for="game in filtered_games"
-                :key="game.id"
-                type="button"
-                @click="openModal(game)"
-                class="flex w-full justify-between place-items-center mt-2 p-2 rounded-md bg-pwsi-1 border-2 border-pwsi-3"
-                :class="status_mapping.has(game.status) ? status_mapping.get(game.status) : ''"
-            >
-                <span class="px-1 text-lg sm:text-xl font-bold text-left">{{ game.name }}</span>
-                <span class="hidden sm:inline px-1 text-sm sm:text-base font-bold text-end" v-if="game.status">{{ game.status }}</span>
-            </button>
-        </div>
+            <span class="px-1 text-lg sm:text-xl font-bold text-left">{{ game.name }}</span>
+            <span class="hidden sm:inline px-1 text-sm sm:text-base font-bold text-end" v-if="game.status">{{ game.status }}</span>
+        </button>
     </div>
 
     <div
         v-if="games_ordered.length !== 0" 
         :class="is_search ? 'hidden' : ''"
-        class="rounded-md bg-pwsi-1 mb-8 border-2 border-pwsi-3"
+        class="rounded-md bg-pwsi-1 mt-2 mb-6 border-2 border-pwsi-3"
     >
         <Disclosure v-slot="{ open }" defaultOpen>
             <DisclosureButton

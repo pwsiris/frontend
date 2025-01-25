@@ -24,7 +24,7 @@
                         />
                         <font-awesome-icon
                             icon="fa-solid fa-magnifying-glass-plus"
-                            class="z-10 absolute w-[7%] md:w-[5%] h-auto top-3 right-3 cursor-pointer text-pwsi-2"
+                            class="z-10 absolute w-[7%] md:w-[5%] h-auto top-3 right-3 cursor-pointer text-pwsi-2 hidden sm:inline"
                             @click="openModal(credits_item.picture_original)"
                         />
                     </div>

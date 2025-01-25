@@ -4,7 +4,7 @@
         Так о чём мы? Ах да, марафоны. Ну да, провожу, иногда хочется, списочек, вот, ниже.
     </div>
 
-    <div class="flex justify-center mb-2">
+    <div class="flex justify-center">
         <input
             @input="update_search"
             @keyup.enter="fake_submit()"
