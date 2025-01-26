@@ -4,7 +4,7 @@
             <a
                 href="https://github.com/killkimno/MORT"
                 target="_blank" rel="noreferrer"
-                class="text-pwsi-link justify-normal"
+                class="text-pwsi-link font-bold justify-normal"
             >
                 MORT<font-awesome-icon icon="fa-solid fa-arrow-up-right-from-square" class="ml-1 h-3 w-auto align-middle" />
             </a>
@@ -32,7 +32,7 @@
             <a
                 href="https://github.com/killkimno/MORT/releases"
                 target="_blank" rel="noreferrer"
-                class="text-pwsi-link"
+                class="text-pwsi-link font-bold"
             >
                 Releases<font-awesome-icon icon="fa-solid fa-arrow-up-right-from-square" class="ml-1 h-3 w-auto align-middle" />
             </a>

@@ -1,7 +1,7 @@
 <template>
     <div class="mx-auto text-lg font-bold mt-4 mb-4 text-justify">
         Помимо игр и аниме иногда мы проводим кино-вечера,
-        где смотрим разнообразные фильмs и мультфильмы,
+        где смотрим разнообразные фильмы и мультфильмы,
         выбранные через аукцион и колесо
         <button type="button" @click="openModal()" class="text-pwsi-link">(правила проведения).</button>
     </div>
@@ -23,7 +23,7 @@
         v-for="auction in auctions_filtered.slice().reverse()" :key="auction.id"
         class="rounded-md bg-pwsi-1 mt-4 border-2 border-pwsi-3"
     >
-        <Disclosure v-slot="{ open }" :key="is_search" :default-open="default_open || is_search">
+        <Disclosure v-slot="{ open }" :key="is_search" :default-open="is_search">
             <DisclosureButton
                 class="w-full flex flex-col md:flex-row place-items-center justify-between p-2 select-text"
             >
@@ -207,17 +207,12 @@
         modal_padding.value = 'padding-right: ' + scroller + 'px !important;';
     };
 
-    const default_open = ref(false);
     const auctions = ref([]);
     const auctions_filtered = ref([]);
 
     onBeforeMount(async () => {
         auctions.value = (await api_get('/auctions')).value || [];
         auctions_filtered.value = auctions.value;
-
-        if (auctions.value.length < 3) {
-            default_open.value = true;
-        }
     });
 
     const status_mapping = new Map();
