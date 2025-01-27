@@ -31,18 +31,30 @@
                         <div class="text-start">
                             <p v-if="marathon.name" class="font-bold text-lg sm:text-2xl mb-1">{{ marathon.name.toUpperCase() }}</p>
                             <p v-if="marathon.description"><span class="font-bold">Описание: </span>{{ marathon.description }}</p>
+                            <p v-if="marathon.date_start"><span class="font-bold">Даты проведения: </span> {{ parse_date(marathon.date_start) }} - {{ parse_date(marathon.date_end) }} </p>
                             <p v-if="marathon.rules">
                                 <span class="font-bold">Правила: </span>
                                 <button type="button" v-on:click.stop.prevent="openModal({id: null, rules: marathon.rules, current_rule: 0});" class="text-pwsi-link">Нажать тут</button>
                             </p>
                             <p v-if="marathon.comment"><span class="font-bold">Комментарий: </span>{{ marathon.comment }}</p>
                             <p v-if="marathon.status" :class="status_mapping.has(marathon.status) ? status_mapping.get(marathon.status) : ''"><span class="font-bold text-pwsi-text">Статус: </span>{{ marathon.status }}</p>
-                            <a v-if="marathon.records && marathon.records.includes('http')" :href="marathon.records" class="flex place-items-center font-bold text-pwsi-link" target="_blank" rel="noreferrer">
-                                <font-awesome-icon
-                                    :icon="get_source_icon(marathon.records)"
-                                    class="h-4 w-auto align-middle pr-1"
-                                /> Записи
-                            </a>
+                            <div v-if="marathon.records" class="flex flex-wrap">
+                                <span class="font-bold mr-2">Записи:</span>
+                                <div
+                                    v-for="record in marathon.records" :key="record.name"
+                                    :class="(marathon.records.length > 1 && record.order != marathon.records.length) ? 'mr-3' : ''"
+                                >
+                                    <a v-if="record.url.includes('http')" :href="record.url" class="font-bold text-pwsi-link" target="_blank" rel="noreferrer">
+                                        <font-awesome-icon
+                                            :icon="get_source_icon(record.url)"
+                                            class="h-4 w-auto align-middle"
+                                        /> {{ record.name }}
+                                    </a>
+                                    <p v-if="!record.url.includes('http')" class="text-wrap">
+                                        {{ record.name }}: {{ record.url }}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -110,15 +122,23 @@
                                     <p v-if="dataModal.status"><span class="font-bold">Статус: </span>{{ dataModal.status }}</p>
                                     <p v-if="dataModal.description"><span class="font-bold">Описание: </span>{{ dataModal.description }}</p>
                                     <p v-if="dataModal.comment"><span class="font-bold">Комментарий: </span>{{ dataModal.comment }}</p>
-                                    <a v-if="dataModal.records && dataModal.records.includes('http')" :href="dataModal.records" class="font-bold text-pwsi-link" target="_blank" rel="noreferrer">
-                                        <font-awesome-icon
-                                            :icon="get_source_icon(dataModal.records)"
-                                            class="h-4 w-auto align-middle"
-                                        /> Записи
-                                    </a>
-                                    <p v-if="dataModal.records && !dataModal.records.includes('http')" :href="dataModal.records">
-                                        <span class="font-bold">Записи: </span>{{ dataModal.records }}
-                                    </p>
+                                    <div v-if="dataModal.records" class="flex flex-wrap justify-center">
+                                        <span class="font-bold mr-2">Записи:</span>
+                                        <div
+                                            v-for="record in dataModal.records" :key="record.name"
+                                            :class="(dataModal.records.length > 1 && record.order != dataModal.records.length) ? 'mr-3' : ''"
+                                        >
+                                            <a v-if="record.url.includes('http')" :href="record.url" class="font-bold text-pwsi-link" target="_blank" rel="noreferrer">
+                                                <font-awesome-icon
+                                                    :icon="get_source_icon(record.url)"
+                                                    class="h-4 w-auto align-middle"
+                                                /> {{ record.name }}
+                                            </a>
+                                            <p v-if="!record.url.includes('http')" class="text-wrap">
+                                                {{ record.name }}: {{ record.url }}
+                                            </p>
+                                        </div>
+                                    </div>
                                     <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
                                 </div>
                             </div>
@@ -165,6 +185,7 @@
     } from '@headlessui/vue';
     import api_get from '@/utils/api_get';
     import get_source_icon from '@/utils/get_source_icon';
+    import parse_date from '@/utils/parse_date';
     
     const search_string = ref('');
     const is_search = ref(false);
@@ -221,7 +242,9 @@
         picture: '',
         status: '',
         comment: '',
-        records: '',
+        date_start: '',
+        date_end: '',
+        records: [],
         rules: [],
         current_rule: 0,
     };

@@ -87,12 +87,23 @@
                                 <p v-if="dataModal.status"><span class="font-bold">Статус: </span>{{ dataModal.status }}</p>
                                 <p v-if="dataModal.order_by"><span class="font-bold">Заказчик: </span>{{ dataModal.order_by }}</p>
                                 <p v-if="dataModal.price"><span class="font-bold">Стоимость: </span>{{ dataModal.price }}</p>
-                                <a v-if="dataModal.records" :href="dataModal.records" class="font-bold text-pwsi-link" target="_blank" rel="noreferrer">
-                                    <font-awesome-icon
-                                        :icon="get_source_icon(dataModal.records)"
-                                        class="h-4 w-auto align-middle"
-                                    /> Записи
-                                </a>
+                                <div v-if="dataModal.records" class="flex flex-wrap justify-center">
+                                    <span class="font-bold mr-2">Записи:</span>
+                                    <div
+                                        v-for="record in dataModal.records" :key="record.name"
+                                        :class="(dataModal.records.length > 1 && record.order != dataModal.records.length) ? 'mr-3' : ''"
+                                    >
+                                        <a v-if="record.url.includes('http')" :href="record.url" class="font-bold text-pwsi-link" target="_blank" rel="noreferrer">
+                                            <font-awesome-icon
+                                                :icon="get_source_icon(record.url)"
+                                                class="h-4 w-auto align-middle"
+                                            /> {{ record.name }}
+                                        </a>
+                                        <p v-if="!record.url.includes('http')" class="text-wrap">
+                                            {{ record.name }}: {{ record.url }}
+                                        </p>
+                                    </div>
+                                </div>
                                 <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
                             </div>
                         </DialogPanel>
@@ -126,7 +137,7 @@
         status: '',
         type: '',
         price: '',
-        records: ''
+        records: []
     };
     const dataModal = ref(emptyModel);
 
@@ -160,5 +171,6 @@
     const status_mapping = new Map();
     status_mapping.set("Сделано", "text-pwsi-done");
     status_mapping.set("В процессе", "text-pwsi-in-progress");
+    status_mapping.set("Отложено", "text-pwsi-on-hold");
     status_mapping.set("Заброшено", "text-pwsi-dropped");
 </script>

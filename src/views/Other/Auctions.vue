@@ -33,7 +33,7 @@
                         <div class="">
                             <p v-if="auction.name" class="font-bold text-lg sm:text-2xl mb-1">{{ auction.name.toUpperCase() }}</p>
                             <p v-if="auction.description"><span class="font-bold">Описание: </span>{{ auction.description }}</p>
-                            <p v-if="auction.date"><span class="font-bold">Дата: </span>{{ auction.date }}</p>
+                            <p v-if="auction.date"><span class="font-bold">Дата: </span>{{ parse_date(auction.date) }}</p>
                             <p v-if="auction.comment"><span class="font-bold">Комментарий: </span>{{ auction.comment }}</p>
                             <p v-if="auction.status" :class="status_mapping.has(auction.status) ? status_mapping.get(auction.status) : ''"><span class="font-bold text-pwsi-text">Статус: </span>{{ auction.status }}</p>
                         </div>
@@ -141,6 +141,7 @@
         DialogPanel
     } from '@headlessui/vue';
     import api_get from '@/utils/api_get';
+    import parse_date from '@/utils/parse_date';
 
     const is_search = ref(false);
     const search_string = ref('');

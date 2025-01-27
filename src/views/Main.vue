@@ -17,12 +17,12 @@
             </p>
             <div class="mt-3 text-xl font-bold leading-6 grid sm:grid-cols-2 gap-2"> <!-- flex flex-wrap justify-between -->
                 <a
-                    v-for="social in all_socials" :key="social.id"
-                    class=" overflow-hidden p-1 sm:p-2 bg-pwsi-1 sm:hover:bg-pwsi-2 rounded-md flex place-items-center border-2 border-pwsi-3"
+                    v-for="social in all_socials.filter((item) => item.type.includes('primary'))" :key="social.id"
+                    class="overflow-hidden p-1 sm:p-2 bg-pwsi-1 sm:hover:bg-pwsi-2 rounded-md flex place-items-center border-2 border-pwsi-3"
                     :href="social.link" target="_blank" rel="noreferrer"
                 > <!-- w-full sm:w-49/100 my-1 -->
                     <font-awesome-icon :icon="social.icon" class="w-6 h-auto max-h-6 mr-2" />
-                    <span class="grow text-center lg:text-left -ml-8 lg:ml-0">{{ social.name }}</span>
+                    <span class="grow text-center lg:text-left -ml-7 lg:ml-0">{{ social.name }}</span>
                 </a>
             </div>
         </div>
