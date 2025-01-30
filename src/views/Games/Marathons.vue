@@ -218,7 +218,7 @@
             is_search.value = true;
         } else {
             search_string.value = '';
-            marathons_filtered.value = marathons.value;
+            marathons_filtered.value = JSON.parse(JSON.stringify(marathons.value));
             is_search.value = false;
         }
     };
@@ -226,7 +226,7 @@
     function search_reset() {
         document.getElementById("search_input").value = "";
         search_string.value = "";
-        marathons_filtered.value = marathons.value;
+        marathons_filtered.value = JSON.parse(JSON.stringify(marathons.value));
         is_search.value = false;
     }
 
@@ -275,7 +275,7 @@
 
     onBeforeMount(async () => {
         marathons.value = (await api_get('/marathons')).value || [];
-        marathons_filtered.value = marathons.value;
+        marathons_filtered.value = JSON.parse(JSON.stringify(marathons.value));
     });
 
     const status_mapping = new Map();

@@ -176,7 +176,7 @@
             is_search.value = true;
         } else {
             search_string.value = '';
-            auctions_filtered.value = auctions.value;
+            auctions_filtered.value = JSON.parse(JSON.stringify(auctions.value));
             is_search.value = false;
         }
     };
@@ -184,7 +184,7 @@
     function search_reset() {
         document.getElementById("search_input").value = "";
         search_string.value = '';
-        auctions_filtered.value = auctions.value;
+        auctions_filtered.value = JSON.parse(JSON.stringify(auctions.value));
         is_search.value = false;
     }
 
@@ -213,7 +213,7 @@
 
     onBeforeMount(async () => {
         auctions.value = (await api_get('/auctions')).value || [];
-        auctions_filtered.value = auctions.value;
+        auctions_filtered.value = JSON.parse(JSON.stringify(auctions.value));
     });
 
     const status_mapping = new Map();

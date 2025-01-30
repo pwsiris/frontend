@@ -256,7 +256,7 @@
         } else {
             query_params.value.search = "";
             search_string.value = '';
-            all_anime_filtered.value = all_anime.value;
+            all_anime_filtered.value = JSON.parse(JSON.stringify(all_anime.value));
             is_search.value = false;
         }
         update_query();
@@ -265,7 +265,7 @@
     function search_reset() {
         document.getElementById("search_input").value = "";
         search_string.value = '';
-        all_anime_filtered.value = all_anime.value;
+        all_anime_filtered.value = JSON.parse(JSON.stringify(all_anime.value));
         query_params.value.search = "";
         update_query();
         is_search.value = false;
@@ -334,7 +334,7 @@
 
     onBeforeMount(async () => {
         all_anime.value = (await api_get('/anime')).value || [];
-        all_anime_filtered.value = all_anime.value;
+        all_anime_filtered.value = JSON.parse(JSON.stringify(all_anime.value));
 
         const query_search = route.query.search;
         if (query_search) {

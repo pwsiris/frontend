@@ -148,11 +148,13 @@
         if (search_string.value) {
             query_params.value.search = search_string.value;
             is_search.value = true;
-            filtered_games.value = games_demo.value.filter((item) => item.name.toLowerCase().includes(search_string.value.toLowerCase()));
+            filtered_games.value = JSON.parse(JSON.stringify(games_demo.value)).filter(
+                (item) => item.name.toLowerCase().includes(search_string.value.toLowerCase())
+            );
         } else {
             query_params.value.search = "";
             is_search.value = false;
-            filtered_games.value = games_demo.value;
+            filtered_games.value = JSON.parse(JSON.stringify(games_demo.value));
         }
         update_query();
     };
@@ -160,7 +162,7 @@
     function search_reset() {
         document.getElementById("search_input").value = "";
         search_string.value = "";
-        filtered_games.value = games_demo.value;
+        filtered_games.value = JSON.parse(JSON.stringify(games_demo.value));
         query_params.value.search = "";
         update_query();
         is_search.value = false;
@@ -212,7 +214,7 @@
         const games = await api_get('/games?types=demo');
         if ("demo" in games.value) {
             games_demo.value = games.value.demo;
-            filtered_games.value = games_demo.value;
+            filtered_games.value = JSON.parse(JSON.stringify(games_demo.value));
         }
 
         const query_search = route.query.search;
@@ -226,7 +228,7 @@
         const query_id = route.query.id;
         if (query_id) {
             const game_id = (Array.isArray(query_id) ? query_id : [query_id])[0];
-            const games = games_demo.value;
+            const games = JSON.parse(JSON.stringify(games_demo.value));
             for (const game of games) {
                 if (game.id == game_id) {
                     query_params.value.id = game_id;
