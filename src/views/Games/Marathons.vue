@@ -106,7 +106,7 @@
                     >
                         <DialogPanel
                             class="transform overflow-hidden rounded-md bg-pwsi-1 border-2 border-pwsi-3 text-pwsi-text shadow-xl transition-all"
-                            :class="dataModal.id ? 'w-full sm:w-2/5' : 'max-h-[90vh] sm:max-w-[90vh]'"
+                            :class="dataModal.id ? 'w-full sm:w-2/5' : ''"
                         >
                             <div v-if="dataModal.id">
                                 <a class="w-full h-auto" :href="dataModal.link" target="_blank" rel="noreferrer">
@@ -145,6 +145,7 @@
                             <div v-else class="relative">
                                 <img
                                     :src="dataModal.rules[dataModal.current_rule]"
+                                    class="max-h-[80svh] object-contain"
                                     alt="а нету картинки"
                                 />
                                 <div

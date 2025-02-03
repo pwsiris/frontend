@@ -86,11 +86,11 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="transform overflow-hidden rounded-md bg-pwsi-1 border-2 border-pwsi-3 text-pwsi-text shadow-xl transition-all aspect-square max-h-[80vh] sm:max-w-[80vw]"
+                            class="transform overflow-hidden rounded-md bg-pwsi-1 border-2 border-pwsi-3 text-pwsi-text shadow-xl transition-all aspect-square"
                         >
                             <img
                                 :src="dataModal.picture"
-                                class="aspect-square object-contain m-auto"
+                                class="max-h-[80svh] aspect-square object-contain m-auto"
                                 alt="а нету картинки"
                             />
                             <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
