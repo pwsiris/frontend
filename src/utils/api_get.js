@@ -2,16 +2,16 @@ import axios from "axios";
 import {ref} from 'vue';
 
 
-export default async function get_from_api(route) {
-    var data = ref(null)
+export default async function api_get(route) {
+    var response_data = ref(null);
 
-    var url_string = `/api${route}`
+    var url_string = `/api${route}`;
     if (
         window.location.host.includes("localhost:") ||
         window.location.href.includes("localhost:") ||
         window.location.origin.includes("localhost:")
     ) {
-        url_string = `http://127.0.0.1:8040/api${route}`
+        url_string = `http://127.0.0.1:8040/api${route}`;
     }
 
     try {
@@ -19,15 +19,15 @@ export default async function get_from_api(route) {
             url_string
         ).then(
             function (response) {
-                data.value = response.data.content;
+                response_data.value = response.data.content;
             }
         ).catch(
             function (error) {
-                data.value = null
+                response_data.value = null;
             }
-        )
+        );
     } catch (e) {
-        data.value = null;
+        response_data.value = null;
     }
-    return data
-}
+    return response_data;
+};

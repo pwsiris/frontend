@@ -28,6 +28,8 @@ jobs:
           node-version: '20.x'
       - run: npm ci
       - run: npm run build
+        env:
+          VITE_MESSAGE_TOKEN: ${{ inputs.target == 'prod' && secrets.MESSAGE_TOKEN_PROD || secrets.MESSAGE_TOKEN_TEST }}
 
       - name: TAR build
         env:

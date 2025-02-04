@@ -32,7 +32,7 @@
             <font-awesome-icon icon="fa-brands fa-twitch" class="align-middle mr-1" />три
         </button>.
         Хотя главным доказательством является сам факт существования данной страницы...
-        А ещё, аниме можно заказать <button type="button" @click="openModal(emptyModel, '')" class="text-pwsi-link">(тык)</button>.
+        А ещё, аниме можно заказать <button type="button" @click="openModal(emptyModel, '')" class="text-pwsi-link">(правила)</button>.
     </div>
 
     <div class="flex justify-center mb-2">
@@ -41,7 +41,7 @@
             @keyup.enter="fake_submit()"
             placeholder="Поиск аниме..."
             id="search_input"
-            class="focus:outline-none w-4/5 sm:w-1/3 p-2 pr-8 rounded-lg text-pwsi-text bg-pwsi-1 border-2 border-pwsi-2"
+            class="focus:outline-none w-4/5 sm:w-1/3 p-2 pr-8 rounded-md text-pwsi-text bg-pwsi-1 border-2 border-pwsi-3"
         />
             <button @click="search_reset()">
                 <font-awesome-icon icon="fa-solid fa-xmark" class="h-6 w-auto align-middle -ml-9" />
@@ -49,8 +49,8 @@
     </div>
 
     <div
-        v-for="anime in all_anime_filtered.value" :key="anime.name"
-        class="rounded-lg mt-2 bg-pwsi-1 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
+        v-for="anime in all_anime_filtered" :key="anime.name"
+        class="rounded-md mt-2 bg-pwsi-1 border-2 border-pwsi-3"
         :class="status_mapping.has(anime.status) ? status_mapping.get(anime.status) : ''"
     >
         <div v-if="anime.series !== null" :key="is_search">
@@ -69,7 +69,7 @@
                         v-for="sub_anime in anime.list" :key="sub_anime.id"
                         type="button"
                         @click="openModal(sub_anime, '')"
-                        class="flex justify-between place-items-center rounded-lg mt-2 bg-pwsi-2 p-2"
+                        class="flex justify-between place-items-center rounded-md mt-2 bg-pwsi-2 p-2 border-2 border-pwsi-4"
                         :class="status_mapping.has(sub_anime.status) ? status_mapping.get(sub_anime.status) : 'text-pwsi-text'"
                     >
                         <span class="px-1 sm:text-lg font-bold text-left">{{ sub_anime.name }}</span>
@@ -118,7 +118,7 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="transform overflow-hidden rounded-2xl text-pwsi-text bg-pwsi-1 shadow-xl transition-all"
+                            class="transform overflow-hidden rounded-md text-pwsi-text bg-pwsi-1 border-2 border-pwsi-3 shadow-xl transition-all"
                             :class="
                                 dataModal.name == ''
                                 ?
@@ -133,15 +133,19 @@
                                 'w-4/5 sm:w-1/2'
                             "
                         >
-                            <div v-if="dataModal.name !== ''" class="flex flex-col sm:flex-row sm:justify-end">
-                                <img v-if="dataModal.picture" :src="dataModal.picture" class="sm:order-last w-full h-auto sm:w-auto sm:h-96" />
-                                <div class="flex flex-col justify-center mx-auto p-2 text-sm sm:text-base">
+                            <div v-if="dataModal.name !== ''" class="flex flex-col sm:flex-row">
+                                <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
+                                <img v-if="dataModal.picture" :src="dataModal.picture" class="sm:order-last sm:mr-0 w-full h-auto sm:w-auto sm:h-96 cursor-pointer" @click="redirect(dataModal.link)" />
+                                <div class="flex flex-col justify-center w-full p-2 text-sm sm:text-base">
                                     <a
                                         :href="dataModal.link" target="_blank" rel="noreferrer"
                                         class="text-base sm:text-lg font-medium leading-4 sm:leading-5 mx-auto text-pwsi-link mt-1 sm:mt-0 mb-4 sm:mb-6"
                                     >
                                         <div v-if="dataModal.series" class="font-bold">{{ dataModal.series }}</div>
-                                        <div :class="dataModal.series ? 'mt-1' : 'font-bold'">{{ dataModal.name }}</div>
+                                        <div :class="dataModal.series ? 'mt-1' : 'font-bold'">
+                                            {{ dataModal.name }}
+                                            <font-awesome-icon v-if="dataModal.link" icon="fa-solid fa-arrow-up-right-from-square" class="h-3 w-auto font-bold align-middle" />
+                                        </div>
                                     </a>
                                     <div v-if="dataModal.order_by"><span class="font-bold">Заказчик: </span>{{ dataModal.order_by }}</div>
                                     <p v-if="dataModal.status === 'Смотрим'"><span class="font-bold">Статус: </span>{{ dataModal.status }}</p>
@@ -152,17 +156,11 @@
                                     <p v-if="dataModal.comment"><span class="font-bold">Комментарий: </span>{{ dataModal.comment }}</p>
                                 </div>
                             </div>
-                            <div v-else-if="dataModal.name == '', dataModal.iframe_link == ''" class="p-4">
+                            <div v-else-if="dataModal.name == '', dataModal.iframe_link == ''" class="p-6">
                                 <div class="text-xl font-bold text-center">Критерии:</div>
                                 <ul class="list-disc ml-3 sm:ml-5 sm:text-lg text-justify">
                                     <li>Сначала обсудить аниму с Миром (mirakzen), только потом донат</li>
                                     <li>Озвучка/субтитры выбираются заказчиком, но могут смениться</li>
-                                    <li>Обычно смотрим
-                                        <a href="https://animego.org/" target="_blank" rel="noreferrer" class="text-pwsi-link font-bold">тут, </a>
-                                        <a href="https://animego.online/" target="_blank" rel="noreferrer" class="text-pwsi-link font-bold">тут</a>
-                                        и
-                                        <a href="https://animejoy.ru/" target="_blank" rel="noreferrer" class="text-pwsi-link font-bold">тут,</a>
-                                        но если анимы нет, то предложить другие варианты</li>
                                     <li>Пожалуй обойдёмся без скама ("боку но пико" передаёт привет)</li>
                                     <li>Фильмы и длинные серии расчитываются по "количеству обычных (~23 минуты) серий в них"</li>
                                 </ul>
@@ -173,9 +171,11 @@
                                     <li>100р - в аниме больше 48 серий</li>
                                     <li>150р - в аниме больше 48 серий, но заказывается меньше 48 серий</li>
                                 </ul>
+                                <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
                             </div>
-                            <div v-else-if="dataModal.name == '', dataModal.iframe_link !== ''">
-                                <iframe :src="dataModal.iframe_link" frameborder="0" allowfullscreen="true" allow="autoplay" scrolling="no" class="w-full aspect-video"></iframe>
+                            <div v-else-if="dataModal.name == '', dataModal.iframe_link !== ''" class="flex flex-col justify-center m-auto">
+                                <div class="absolute m-auto left-0 right-0">Loading...</div>
+                                <iframe :src="dataModal.iframe_link" frameborder="0" allowfullscreen="true" allow="autoplay" scrolling="no" class="w-full aspect-video z-[60]"></iframe>
                             </div>
                         </DialogPanel>
                     </TransitionChild>
@@ -187,7 +187,8 @@
 
 
 <script setup>
-    import { onBeforeMount, ref } from 'vue'
+    import { onBeforeMount, ref } from 'vue';
+    import { useRouter, useRoute } from 'vue-router';
     import {
         Disclosure,
         DisclosureButton,
@@ -196,60 +197,85 @@
         TransitionChild,
         Dialog,
         DialogPanel
-    } from '@headlessui/vue'
-    import get_from_api from '@/utils/get_from_api'
+    } from '@headlessui/vue';
+    import api_get from '@/utils/api_get';
 
-    const is_search = ref(false)
+    const route = useRoute();
+    const router = useRouter();
+    const query_params = ref(
+        {
+            search: "",
+            id: ""
+        }
+    );
+
+    function update_query() {
+        const q = {};
+        if (query_params.value.search) {
+            q.search = query_params.value.search;
+        }
+        if (query_params.value.id) {
+            q.id = query_params.value.id;
+        }
+        router.replace({query: q, force: false});
+    };
+
+    const is_search = ref(false);
     const search_string = ref('');
 
     function update_search(event) {
         search_string.value = event.target.value;
 
         if (search_string.value) {
-            const filtered_anime = []
+            query_params.value.search = search_string.value;
+            const filtered_anime = [];
 
-            const anime_all = JSON.parse(JSON.stringify(all_anime.value.value));
+            const anime_all = JSON.parse(JSON.stringify(all_anime.value));
             for (const anime of anime_all) {
                 if (anime.name.toLowerCase().includes(search_string.value.toLowerCase())) {
-                    filtered_anime.push(anime)
+                    filtered_anime.push(anime);
                 } else {
                     if (anime.series !== null) {
-                        const sub_anime_list = []
+                        const sub_anime_list = [];
 
                         for (const sub_anime of anime.list) {
                             if (sub_anime.name.toLowerCase().includes(search_string.value.toLowerCase())) {
-                                sub_anime_list.push(sub_anime)
+                                sub_anime_list.push(sub_anime);
                             }
                         }
 
                         if (sub_anime_list.length != 0) {
-                            anime.list = sub_anime_list
-                            filtered_anime.push(anime)
+                            anime.list = sub_anime_list;
+                            filtered_anime.push(anime);
                         }
                     }
                 }
             }
-            all_anime_filtered.value.value = filtered_anime
-            is_search.value = true
+            all_anime_filtered.value = filtered_anime;
+            is_search.value = true;
         } else {
+            query_params.value.search = "";
             search_string.value = '';
-            all_anime_filtered.value.value = all_anime.value.value
-            is_search.value = false
+            all_anime_filtered.value = JSON.parse(JSON.stringify(all_anime.value));
+            is_search.value = false;
         }
-    }
+        update_query();
+    };
 
     function search_reset() {
         document.getElementById("search_input").value = "";
         search_string.value = '';
-        all_anime_filtered.value.value = all_anime.value.value
-        is_search.value = false
+        all_anime_filtered.value = JSON.parse(JSON.stringify(all_anime.value));
+        query_params.value.search = "";
+        update_query();
+        is_search.value = false;
     }
 
     function fake_submit() {
         document.getElementById("search_input").blur();
     }
 
-    const isOpen = ref(false)
+    const isOpen = ref(false);
     const emptyModel = {
         name: '',
         type: '',
@@ -264,43 +290,27 @@
         link: '',
         completed_time: '',
         padding: ''
-    }
-    const dataModal = ref(emptyModel)
+    };
+    const dataModal = ref(emptyModel);
 
     function closeModal() {
         isOpen.value = false;
         document.getElementById('dialog-all').style.paddingRight = "";
         dataModal.value.padding = "";
-        // URL.revokeObjectURL(dataModal.value.picture)
-    }
+        query_params.value.id = "";
+        update_query();
+    };
+
     function openModal(anime_info, iframe_link) {
         if (iframe_link) {
-            anime_info.iframe_link = iframe_link + `&autoplay=true&parent=${window.location.hostname}`
+            anime_info.iframe_link = iframe_link + `&autoplay=true&parent=${window.location.hostname}`;
         } else {
-            anime_info.iframe_link = ""
+            anime_info.iframe_link = "";
         }
         isOpen.value = true;
         dataModal.value = JSON.parse(JSON.stringify(anime_info));
-
-        // const picture = ref('')
-        // try {
-        //   axios.get(
-        //     anime_info.picture, { responseType: "blob" }
-        //   ).then(
-        //     function (response) {
-        //       picture.value = URL.createObjectURL(response.data);
-        //       dataModal.value.picture = picture.value;
-        //     }
-        //   ).catch(
-        //     function (error) {
-        //       picture.value = '';
-        //       dataModal.value.picture = picture.value;
-        //     }
-        //   )
-        // } catch (e) {
-        //   picture.value = '';
-        //   dataModal.value.picture = picture.value;
-        // }
+        query_params.value.id = dataModal.value.id;
+        update_query();
 
         var scroller = window.innerWidth - (document.documentElement.clientWidth || document.body.clientWidth);
         dataModal.value.padding = 'padding-right: ' + scroller + 'px !important;';
@@ -311,20 +321,59 @@
             const date_splitted = datetime_local.toISOString().split("T")[0].split("-");
             dataModal.value.completed_time = `${date_splitted[2]}-${date_splitted[1]}-${date_splitted[0]}`;
         }
-    }
+    };
 
-    const all_anime = ref([])
-    const all_anime_filtered = ref([])
+    function redirect(url) {
+        if (url) {
+            window.open(url, "_blank", "noopener,noreferrer");
+        }
+    };
+
+    const all_anime = ref([]);
+    const all_anime_filtered = ref([]);
 
     onBeforeMount(async () => {
-        all_anime.value = await get_from_api('/anime')
-        all_anime_filtered.value.value = all_anime.value.value || []
-    })
+        all_anime.value = (await api_get('/anime')).value || [];
+        all_anime_filtered.value = JSON.parse(JSON.stringify(all_anime.value));
+
+        const query_search = route.query.search;
+        if (query_search) {
+            const search = (Array.isArray(query_search) ? query_search : [query_search])[0];
+            query_params.value.search = search;
+            document.getElementById("search_input").value = search;
+            update_search({target: {value: search}});
+        }
+
+        const query_id = route.query.id;
+        if (query_id) {
+            const anime_id = (Array.isArray(query_id) ? query_id : [query_id])[0];
+            var search_stop = false;
+            for (const anime of all_anime_filtered.value.slice()) {
+                if (anime.series !== null) {
+                    for (const sub_anime of anime.list) {
+                        if (sub_anime.id == anime_id) {
+                            query_params.value.id = anime_id;
+                            openModal(sub_anime);
+                            search_stop = true;
+                            break;
+                        }
+                    }
+                } else {
+                    if (anime.id == anime_id) {
+                        query_params.value.id = anime_id;
+                        openModal(anime);
+                        search_stop = true;
+                        break;
+                    }
+                }
+                if (search_stop) { break; }
+            }
+        }
+    });
 
     const status_mapping = new Map();
     status_mapping.set("Просмотрено", "text-pwsi-done");
     status_mapping.set("Смотрим", "text-pwsi-in-progress");
     status_mapping.set("Смотрю", "text-pwsi-in-progress");
     status_mapping.set("Заброшено", "text-pwsi-dropped");
-
 </script>

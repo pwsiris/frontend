@@ -9,54 +9,49 @@
             <font-awesome-icon icon="fa-brands fa-steam" class="h-5 w-auto align-middle mr-1" />Steam
         </a>
         и других сервисах. А ещё, игры можно заказать или подарить
-        <button type="button" @click="openModal(emptyModel)" class="text-pwsi-link">(тык)</button>,
+        <button type="button" @click="openModal(emptyModel)" class="text-pwsi-link">(правила)</button>,
         например, из того же
         <a
             href="https://store.steampowered.com/wishlist/id/Iris_ti"
             target="_blank" rel="noreferrer"
             class="text-pwsi-link"
         >
-            вишлиста
+            <font-awesome-icon icon="fa-brands fa-steam" class="h-5 w-auto align-middle mr-1" />вишлиста
         </a>
         стима.
     </div>
 
-    <div class="mb-4">
-        <div class="flex justify-center">
-            <input
-                @input="update_search"
-                @keyup.enter="fake_submit()"
-                placeholder="Поиск игр..."
-                id="search_input"
-                class="focus:outline-none w-4/5 sm:w-1/3 p-2 pr-8 rounded-lg text-pwsi-text bg-pwsi-1 border-2 border-pwsi-2"
-            />
-            <button @click="search_reset()">
-                <font-awesome-icon icon="fa-solid fa-xmark" class="h-6 w-auto align-middle -ml-9" />
-            </button>
-        </div>
+    <div class="flex justify-center mb-2">
+        <input
+            @input="update_search"
+            @keyup.enter="fake_submit()"
+            placeholder="Поиск игр..."
+            id="search_input"
+            class="focus:outline-none w-4/5 sm:w-1/3 p-2 pr-8 rounded-md text-pwsi-text bg-pwsi-1 border-2 border-pwsi-3 placeholder:text-pwsi-text"
+        />
+        <button @click="search_reset()">
+            <font-awesome-icon icon="fa-solid fa-xmark" class="h-6 w-auto align-middle -ml-9" />
+        </button>
+    </div>
 
-        <div
-            v-if="is_search"
-            class="mt-4"
+    <div v-if="is_search">
+        <button
+            v-for="game in filtered_games"
+            :key="game.id"
+            type="button"
+            @click="openModal(game)"
+            class="flex w-full justify-between place-items-center mt-2 p-2 rounded-md bg-pwsi-1 border-2 border-pwsi-3"
+            :class="status_mapping.has(game.status) ? status_mapping.get(game.status) : ''"
         >
-            <button
-                v-for="game in filtered_games"
-                :key="game.id"
-                type="button"
-                @click="openModal(game)"
-                class="flex w-full justify-between place-items-center mt-2 p-2 rounded-lg bg-pwsi-1 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
-                :class="status_mapping.has(game.status) ? status_mapping.get(game.status) : ''"
-            >
-                <span class="px-1 text-lg sm:text-xl font-bold text-left">{{ game.name }}</span>
-                <span class="hidden sm:inline px-1 text-sm sm:text-base font-bold text-end" v-if="game.status">{{ game.status }}</span>
-            </button>
-        </div>
+            <span class="px-1 text-lg sm:text-xl font-bold text-left">{{ game.name }}</span>
+            <span class="hidden sm:inline px-1 text-sm sm:text-base font-bold text-end" v-if="game.status">{{ game.status }}</span>
+        </button>
     </div>
 
     <div
         v-if="games_ordered.length !== 0" 
         :class="is_search ? 'hidden' : ''"
-        class="rounded-lg bg-pwsi-1 mb-8 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
+        class="rounded-md bg-pwsi-1 mt-2 mb-6 border-2 border-pwsi-3"
     >
         <Disclosure v-slot="{ open }" defaultOpen>
             <DisclosureButton
@@ -70,7 +65,7 @@
                     v-for="game in games_ordered" :key="game.id"
                     type="button"
                     @click="openModal(game)"
-                    class="flex justify-between place-items-center rounded-lg mt-2 p-2 bg-pwsi-2"
+                    class="flex justify-between place-items-center rounded-md mt-2 p-2 bg-pwsi-2 border-2 border-pwsi-4"
                     :class="status_mapping.has(game.status) ? status_mapping.get(game.status) : ''"
                 >
                     <span class="px-1 sm:text-lg font-bold text-left">{{ game.name }}</span>
@@ -83,7 +78,7 @@
     <div
         v-for="genre in genres" :key="genre"
         :class="is_search ? 'hidden' : ''"
-        class="rounded-lg bg-pwsi-1 mt-2 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
+        class="rounded-md bg-pwsi-1 mt-2 border-2 border-pwsi-3"
     >
         <Disclosure v-slot="{ open }">
             <DisclosureButton
@@ -97,39 +92,13 @@
                     v-for="game in games_main.filter((item) => item.genre === genre)" :key="game.id"
                     type="button"
                     @click="openModal(game)"
-                    class="flex justify-between place-items-center rounded-lg mt-2 p-2 bg-pwsi-2"
+                    class="flex justify-between place-items-center rounded-md mt-2 p-2 bg-pwsi-2 border-2 border-pwsi-4"
                     :class="status_mapping.has(game.status) ? status_mapping.get(game.status) : ''"
                 >
                     <span class="px-1 sm:text-lg font-bold text-left">{{ game.name }}</span>
                     <span class="hidden sm:inline px-1 text-sm sm:text-base font-bold text-end" v-if="game.status">
                         {{ game.status }}
                     </span>
-                </button>
-            </DisclosurePanel>
-        </Disclosure>
-    </div>
-
-    <div
-        v-if="games_demo.length !== 0" 
-        :class="is_search ? 'hidden' : ''"
-        class="rounded-lg bg-pwsi-1 mt-10 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow"
-    >
-        <Disclosure v-slot="{ open }">
-            <DisclosureButton
-                class="w-full flex place-items-center justify-between p-2"
-            >
-                <span class="px-1 text-lg sm:text-xl font-bold text-left">ДЕМО</span>
-                <font-awesome-icon icon="fa-solid fa-angle-down" :class="open ? 'rotate-180 transform' : ''" class="shrink-0 h-8 w-8" />
-            </DisclosureButton>
-            <DisclosurePanel class="flex flex-col p-2 pt-0">
-                <button
-                    v-for="game in games_demo" :key="game.id"
-                    type="button"
-                    @click="openModal(game)"
-                    class="flex justify-between place-items-center rounded-lg mt-2 p-2 bg-pwsi-2"
-                >
-                    <span class="px-1 sm:text-lg font-bold text-left">{{ game.name }}</span>
-                    <span class="hidden sm:inline px-1 text-sm sm:text-base font-bold text-end" v-if="game.status">{{ game.status }}</span>
                 </button>
             </DisclosurePanel>
         </Disclosure>
@@ -163,21 +132,20 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="transform overflow-hidden rounded-2xl bg-pwsi-1 text-pwsi-text shadow-xl transition-all"
+                            class="transform overflow-hidden rounded-md bg-pwsi-1 border-2 border-pwsi-3 text-pwsi-text shadow-xl transition-all"
                             :class="dataModal.name !== '' ? 'w-full sm:w-2/5' : ''"
                         >
-                            <!-- <div v-if="dataModal.name !== ''" class="flex flex-col sm:flex-row sm:justify-end"> -->
                             <div v-if="dataModal.name !== ''" class="flex flex-col">
-                                <!-- <img v-if="dataModal.picture" :src="dataModal.picture" class="sm:order-last w-full h-auto sm:w-auto sm:h-72" /> -->
+                                <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
                                 <a class="w-full h-auto" :href="dataModal.link" target="_blank" rel="noreferrer">
                                     <img v-if="dataModal.picture" :src="dataModal.picture" class="w-full h-auto" />
                                 </a>
-                                <div class="flex flex-col justify-center mx-auto p-2 text-sm sm:text-base">
+                                <div class="flex flex-col justify-center w-full p-2 text-sm sm:text-base">
                                     <a
                                         :href="dataModal.link" target="_blank" rel="noreferrer"
                                         class="text-base sm:text-lg font-bold leading-4 sm:leading-5 mx-auto text-pwsi-link mt-1 sm:mt-2 mb-4 sm:mb-3"
                                     >
-                                        {{ dataModal.name }}
+                                        {{ dataModal.name }} <font-awesome-icon v-if="dataModal.link" icon="fa-solid fa-arrow-up-right-from-square" class="h-3 w-auto font-bold align-middle" />
                                     </a>
                                     <p v-if="is_search && type_mapping.has(dataModal.type)"><span class="font-bold">Категория: </span>{{ type_mapping.get(dataModal.type) }}</p>
                                     <p v-if="is_search"><span class="font-bold">Жанр: </span>{{ dataModal.genre }}</p>
@@ -193,17 +161,19 @@
                                             :class="(dataModal.records.length > 1 && record.order != dataModal.records.length) ? 'mr-3' : ''"
                                         >
                                             <a v-if="record.url.includes('http')" :href="record.url" class="font-bold text-pwsi-link" target="_blank" rel="noreferrer">
-                                                {{ record.name }} <font-awesome-icon icon="fa-solid fa-arrow-up-right-from-square" class="h-3 w-auto align-middle" />
+                                                <font-awesome-icon
+                                                    :icon="get_source_icon(record.url)"
+                                                    class="h-4 w-auto align-middle"
+                                                /> {{ record.name }}
                                             </a>
                                             <p v-if="!record.url.includes('http')" class="text-wrap">
                                                 {{ record.name }}: {{ record.url }}
                                             </p>
                                         </div>
                                     </div>
-                                    <button className="h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
                                 </div>
                             </div>
-                            <div v-else class="p-4">
+                            <div v-else class="p-6">
                                 <div class="text-xl font-bold text-center">
                                 Критерии:
                                 </div>
@@ -221,7 +191,7 @@
                                     </li>
                                 </ul>
 
-                                <div class="text-xl font-bold text-center mt-1">
+                                <div class="text-xl font-bold text-center mt-2">
                                     Как подарить/заказать:
                                 </div>
                                 <ul class="list-disc ml-3 sm:ml-5 sm:text-lg text-justify">
@@ -239,7 +209,8 @@
 
 
 <script setup>
-    import { onBeforeMount, ref } from 'vue'
+    import { onBeforeMount, ref } from 'vue';
+    import { useRouter, useRoute } from 'vue-router';
     import {
         Disclosure,
         DisclosureButton,
@@ -247,58 +218,82 @@
         TransitionRoot,
         TransitionChild,
         Dialog,
-        DialogPanel,
-        DialogTitle,
-    } from '@headlessui/vue'
-    import get_from_api from '@/utils/get_from_api'
+        DialogPanel
+    } from '@headlessui/vue';
+    import api_get from '@/utils/api_get';
+    import get_source_icon from '@/utils/get_source_icon';
+
+    const route = useRoute();
+    const router = useRouter();
+    const query_params = ref(
+        {
+            search: "",
+            id: ""
+        }
+    );
+
+    function update_query() {
+        const q = {};
+        if (query_params.value.search) {
+            q.search = query_params.value.search;
+        }
+        if (query_params.value.id) {
+            q.id = query_params.value.id;
+        }
+        router.replace({query: q, force: false});
+    };
     
-    const filtered_games = ref([])
+    const filtered_games = ref([]);
     const search_string = ref('');
     const is_search = ref(false);
 
     function update_search(event) {
         search_string.value = event.target.value;
         if (search_string.value) {
+            query_params.value.search = search_string.value;
             is_search.value = true;
-            filtered_games.value = games_ordered.value.concat(games_main.value).concat(games_demo.value).filter((item) => search_filter(item))
+            filtered_games.value = games_ordered.value.concat(games_main.value).filter((item) => search_filter(item));
         } else {
+            query_params.value.search = "";
             is_search.value = false;
-            filtered_games.value = []
+            filtered_games.value = [];
         }
-    }
+        update_query();
+    };
 
     function search_filter(game) {
-        const not_played_statuses = ["не начато", "не начали", "не играли", "не тронуто", "не трогали", '""']
-        var search_string_filter = (" " + search_string.value).slice(1)
+        const not_played_statuses = ["не начато", "не начали", "не играли", "не тронуто", "не трогали", '""'];
+        var search_string_filter = (" " + search_string.value).slice(1);
         if (not_played_statuses.includes(search_string.value.toLowerCase())) {
-            search_string_filter = ""
+            search_string_filter = "";
         }
-        const game_status = game.status || ""
-        const game_type = game.type || ""
+        const game_status = game.status || "";
 
         return search_string && (
             game.name.toLowerCase().includes(search_string.value.toLowerCase())
             ||
             (
-                (game_type.toLowerCase() != "demo" || game_status.toLowerCase() != "")
+                game_status.toLowerCase() != ""
                 &&
                 game_status.toLowerCase() == search_string_filter.toLowerCase()
             )
-        )
-    }
+        );
+    };
 
     function search_reset() {
         document.getElementById("search_input").value = "";
         search_string.value = "";
-        filtered_games.value = []
+        filtered_games.value = [];
+        query_params.value.search = "";
+        update_query();
         is_search.value = false;
-    }
+    };
 
     function fake_submit() {
         document.getElementById("search_input").blur();
-    }
+    };
 
-    const isOpen = ref(false)
+    const isOpen = ref(false);
     const emptyModel = {
         id: 0,
         name: '',
@@ -313,38 +308,62 @@
         gift_by: '',
         order_by: '',
         padding: ''
-    }
-    const dataModal = ref(emptyModel)
+    };
+    const dataModal = ref(emptyModel);
 
     function closeModal() {
         isOpen.value = false;
         document.getElementById('dialog-all').style.paddingRight = "";
         dataModal.value.padding = "";
-    }
+        query_params.value.id = "";
+        update_query();
+    };
 
     function openModal(game_info) {
         isOpen.value = true;
         dataModal.value = JSON.parse(JSON.stringify(game_info));
+        query_params.value.id = dataModal.value.id;
+        update_query();
     
         var scroller = window.innerWidth - (document.documentElement.clientWidth || document.body.clientWidth);
         dataModal.value.padding = 'padding-right: ' + scroller + 'px !important;';
-    }
+    };
 
-    const genres = ref([])
-    const games_main = ref([])
-    const games_ordered = ref([])
-    const games_demo = ref([])
+    const genres = ref([]);
+    const games_ordered = ref([]);
+    const games_main = ref([]);
 
-    onBeforeMount(async () => {
-        genres.value = (await get_from_api('/games/genres?genre=main')).value || []
-    
-        const games = await get_from_api('/games?types=main&types=ordered&types=demo')
-        if (games.value !== null && "main" in games.value && "ordered" in games.value && "demo" in games.value) {
-            games_main.value = games.value.main
-            games_ordered.value = games.value.ordered
-            games_demo.value = games.value.demo
+    onBeforeMount(async () => {    
+        const games = await api_get('/games?types=main&types=ordered');
+        if (games.value !== null && "ordered" in games.value) {
+            games_ordered.value = games.value.ordered;
         }
-    })
+        if (games.value !== null && "main" in games.value) {
+            genres.value = (await api_get('/games/genres?genre=main')).value || [];
+            games_main.value = games.value.main;
+        }
+
+        const query_search = route.query.search;
+        if (query_search) {
+            const search = (Array.isArray(query_search) ? query_search : [query_search])[0];
+            query_params.value.search = search;
+            document.getElementById("search_input").value = search;
+            update_search({target: {value: search}});
+        }
+
+        const query_id = route.query.id;
+        if (query_id) {
+            const game_id = (Array.isArray(query_id) ? query_id : [query_id])[0];
+            const games = games_ordered.value.concat(games_main.value);
+            for (const game of games) {
+                if (game.id == game_id) {
+                    query_params.value.id = game_id;
+                    openModal(game);
+                    break;
+                }
+            }
+        }
+    });
 
     const status_mapping = new Map();
     status_mapping.set("Пройдено", "text-pwsi-done");
@@ -357,6 +376,5 @@
 
     const type_mapping = new Map();
     type_mapping.set("ordered", "Заказы");
-    type_mapping.set("demo", "Демо");
 
 </script>

@@ -17,11 +17,11 @@
             class="col-span-1 md:px-10 xl:my-6"
             :class="lore_block.image_style"
         >
-            <img :src="lore_block.image" class="p-2 pb-8 bg-gray-600 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow" />
+            <img :src="lore_block.image" class="p-2 pb-8 bg-pwsi-3 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow" />
         </div>
     </div>
 
-    <div class="mt-6 text-right">
+    <div v-if="lore.length" class="mt-6 text-right">
         <p>Автор: Snejara</p>
         <p>Редактура: Iris_ti</p>
     </div>
@@ -29,8 +29,8 @@
 
 
 <script setup>
-    import { onBeforeMount, ref } from 'vue'
-    import get_from_api from '@/utils/get_from_api'
+    import { onBeforeMount, ref } from 'vue';
+    import api_get from '@/utils/api_get';
 
     const images_style = [
         "md:rotate-12",
@@ -39,28 +39,28 @@
         "md:-rotate-6 md:order-first",
         "md:rotate-12",
         "md:-rotate-12 md:order-first",
-    ]
-    const lore = ref([])
+    ];
+    const lore = ref([]);
 
     onBeforeMount(async () => {
-        lore.value = (await get_from_api('/lore')).value || []
+        lore.value = (await api_get('/lore')).value || [];
 
         for (const [i, block_value] of lore.value.entries()) {
             if (i == 0) {
-                block_value["style"] = "mt-2"
+                block_value["style"] = "mt-2";
             } else {
-                block_value["style"] = "mt-6"
+                block_value["style"] = "mt-6 sm:mt-12";
             }
 
-            block_value["image"] = `/static/images/lore${i+1}.png`;
+            block_value["image"] = `/static/images/lore/lore${i+1}.png`;
             block_value["image_style"] = images_style[i];
 
             for (const [j, paragraph_value] of block_value["paragraphs"].entries()) {
                 if (j != 0) {
-                    paragraph_value["style"] = "mt-6"
+                    paragraph_value["style"] = "mt-6";
                 }
             }
         }
-    })
+    });
 
 </script>
