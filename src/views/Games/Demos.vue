@@ -79,12 +79,9 @@
                                     <p v-if="dataModal.order_by && dataModal.gift_by !== dataModal.order_by"><span class="font-bold">Заказ: </span>{{ dataModal.order_by }}</p>
                                     <p v-if="dataModal.status"><span class="font-bold">Статус: </span>{{ dataModal.status }}</p>
                                     <p v-if="dataModal.comment"><span class="font-bold">Комментарий: </span>{{ dataModal.comment }}</p>
-                                    <div v-if="dataModal.records" class="flex flex-wrap justify-center">
-                                        <span class="font-bold mr-2">Записи:</span>
-                                        <div
-                                            v-for="record in dataModal.records" :key="record.name"
-                                            :class="(dataModal.records.length > 1 && record.order != dataModal.records.length) ? 'mr-3' : ''"
-                                        >
+                                    <div v-if="dataModal.records" class="flex flex-wrap justify-center gap-x-3">
+                                        <span class="font-bold -mr-2">Записи:</span>
+                                        <div v-for="record in dataModal.records" :key="record.name">
                                             <a v-if="record.url.includes('http')" :href="record.url" class="font-bold text-pwsi-link" target="_blank" rel="noreferrer">
                                                 <font-awesome-icon
                                                     :icon="get_source_icon(record.url)"

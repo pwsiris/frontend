@@ -15,13 +15,13 @@ export default {
                 'pwsi-3': '#866399',
                 'pwsi-4': '#291933',
                 'pwsi-text': '#cbd5e1', /** slate-300 #cbd5e1 */ /** slate-100 #f1f5f9 */ /** slate-200 #e2e8f0 */
-                'pwsi-done': '#07B279', /** emerald-600 #059669 */ /** #07B279 */
-                'pwsi-in-progress': '#eab308', /** yellow-500 */
-                'pwsi-on-hold': '#c084fc', /** purple-400 */
-                'pwsi-first-look': '#0891b2', /** cyan-600 */
-                'pwsi-dropped': '#f43f5e', /** rose-500 */
+                'pwsi-done': '#12BC84', /** emerald-600 #059669 */ /** #07B279 */
+                'pwsi-in-progress': '#E8BB37', /** yellow-500 #eab308 */
+                'pwsi-on-hold': '#CB9DF9', /** purple-400 #c084fc */
+                'pwsi-first-look': '#0891b2', /** cyan-600 #0891b2 */
+                'pwsi-dropped': '#F9687E', /** rose-500 #f43f5e */
                 'pwsi-link': '#ffffff', /** white */
-                'pwsi-shadow': '#374151', /** gray-900 */
+                'pwsi-shadow': '#374151', /** gray-700 #374151 */
             },
             // width: {
             //     '32/100': '32%',

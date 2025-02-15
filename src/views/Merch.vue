@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto text-lg font-bold mt-4 mb-2 sm:mb-0 text-justify">
+    <div class="mx-auto text-lg font-bold mt-4 text-justify">
         Хотите потискать Ириску? Это вполне возможно - у нас есть мерч!
         Нюансы заказов указаны <button type="button" @click="openModal()" class="text-pwsi-link">ТУТ (инфо)</button>.
         По всем вопросам и заказам обращаться к стримеру в лс
