@@ -14,14 +14,14 @@ import {
     faHandshakeAngle, faListCheck, faBook, faCoins, faMessage, faMagnifyingGlassPlus,
     faCaretUp, faCaretLeft, faCaretRight
 } from '@fortawesome/free-solid-svg-icons';
-import { faBoosty, faDonationAlerts, faMyAnimeList, faRoulette } from "@/icons";
+import { faBoosty, faDonationAlerts, faMyAnimeList, faRoulette, faGamepadDemo } from "@/icons";
 
 library.add(
     faDiscord, faTwitch, faYoutube, faVk, faTelegram, faInstagram, faSteam,
     faEnvelope, faTrophy, faCircleDollarToSlot, faArrowUpRightFromSquare, faXmark,
     faBars, faAngleDown, faMyAnimeList, faBoosty, faDonationAlerts, faRoulette, faImages,
     faLanguage, faGamepad, faHandshakeAngle, faListCheck, faBook, faCoins, faMessage,
-    faMagnifyingGlassPlus, faCaretUp, faCaretLeft, faCaretRight
+    faMagnifyingGlassPlus, faCaretUp, faCaretLeft, faCaretRight, faGamepadDemo
 );
 
 const app = createApp(App);

@@ -31,7 +31,7 @@
                     <img v-if="auction.picture" :src="auction.picture" class="w-full h-auto sm:w-auto sm:h-48 rounded-md" />
                     <div class="mt-4 sm:mt-0 sm:p-4 text-sm sm:text-base text-start">
                         <div class="">
-                            <p v-if="auction.name" class="font-bold text-lg sm:text-2xl mb-1">{{ auction.name.toUpperCase() }}</p>
+                            <p v-if="auction.name" class="font-bold text-lg sm:text-2xl mb-1 text-pwsi-link">{{ auction.name.toUpperCase() }}</p>
                             <p v-if="auction.description"><span class="font-bold">Описание: </span>{{ auction.description }}</p>
                             <p v-if="auction.date"><span class="font-bold">Дата: </span>{{ parse_date(auction.date) }}</p>
                             <p v-if="auction.comment"><span class="font-bold">Комментарий: </span>{{ auction.comment }}</p>

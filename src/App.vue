@@ -146,7 +146,7 @@
                 {
                     name: "Демо",
                     url: "/demos",
-                    icon: "fa-solid fa-gamepad"
+                    icon: "fa-solid fa-gamepaddemo"
                 },
                 {
                     name: "Челенжи",
