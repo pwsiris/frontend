@@ -4,6 +4,7 @@
     </div>
 
     <input
+        v-if="title_data.visible"
         type="text"
         id="title"
         placeholder="Заголовок"
@@ -92,7 +93,7 @@
         padding: ''
     };
     const dataModal = ref(emptyModel);
-    const title_data = ref({text: '', editable: false});
+    const title_data = ref({text: '', visible: false, editable: false});
 
     function closeModal() {
         isOpen.value = false;
@@ -128,7 +129,7 @@
     };
 
     onBeforeMount(async () => {
-        title_data.value = (await api_get('/site/message/title')).value || {text: '', editable: false};
+        title_data.value = (await api_get('/site/message/title')).value || {text: '', visible: false, editable: false};
     });
 
 </script>
