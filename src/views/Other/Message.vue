@@ -110,7 +110,7 @@
     };
 
     async function send_message() {
-        const title = document.getElementById('title').value;
+        const title = (document.getElementById('title') || {value: null}).value;
         const description = document.getElementById('description').value;
 
         var modal_message = "Произошла ошибка";
