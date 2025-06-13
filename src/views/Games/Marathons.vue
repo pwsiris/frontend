@@ -103,15 +103,33 @@
                     >
                         <DialogPanel
                             class="transform overflow-hidden rounded-md bg-pwsi-1 border-2 border-pwsi-3 text-pwsi-text shadow-xl transition-all"
-                            :class="dataModal.id ? 'w-full sm:w-2/5' : ''"
+                            :class="
+                                dataModal.id
+                                ?
+                                (
+                                    dataModal.picture_mode == 'portrait'
+                                    ?
+                                    'w-4/5 sm:w-1/2'
+                                    :
+                                    'w-full sm:w-2/5'
+                                )
+                                :
+                                ''
+                            "
                         >
-                            <div v-if="dataModal.id">
-                                <a class="w-full h-auto" :href="dataModal.link" target="_blank" rel="noreferrer">
-                                    <img v-if="dataModal.picture" :src="dataModal.picture" class="w-full h-auto" />
-                                </a>
+                            <div v-if="dataModal.id" class="flex flex-col" :class="dataModal.picture_mode == 'portrait' ? 'sm:flex-row' : ''">
+                                <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
+                                <img
+                                    v-if="dataModal.picture"
+                                    :src="dataModal.picture"
+                                    class="w-full h-auto cursor-pointer"
+                                    :class="dataModal.picture_mode == 'portrait' ? 'sm:order-last sm:mr-0 sm:w-auto sm:h-96' : ''"
+                                    @click="redirect(dataModal.link)"
+                                    :title="dataModal.link || ''"
+                                />
                                 <div class="flex flex-col justify-center w-full p-2 text-sm sm:text-base">
                                     <a
-                                        :href="dataModal.link" target="_blank" rel="noreferrer"
+                                        :href="dataModal.link" target="_blank" rel="noreferrer" :title="dataModal.link || ''"
                                         class="text-base sm:text-lg font-bold leading-4 sm:leading-5 mx-auto text-pwsi-link mt-1 sm:mt-2 mb-4 sm:mb-3"
                                     >
                                         {{ dataModal.name }} <font-awesome-icon v-if="dataModal.link" icon="fa-solid fa-arrow-up-right-from-square" class="h-3 w-auto font-bold align-middle" />
@@ -136,7 +154,6 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
                                 </div>
                             </div>
                             <div v-else class="relative">
@@ -184,6 +201,7 @@
     import api_get from '@/utils/api_get';
     import get_source_icon from '@/utils/get_source_icon';
     import parse_date from '@/utils/parse_date';
+    import redirect from '@/utils/redirect';
     
     const search_string = ref('');
     const is_search = ref(false);
@@ -238,6 +256,7 @@
         name: '',
         link: '',
         picture: '',
+        picture_mode: '',
         status: '',
         comment: '',
         date_start: '',

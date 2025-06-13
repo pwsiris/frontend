@@ -130,15 +130,28 @@
                                     ''
                                 )
                                 :
-                                'w-4/5 sm:w-1/2'
+                                (
+                                    dataModal.picture_mode == 'portrait'
+                                    ?
+                                    'w-4/5 sm:w-1/2'
+                                    :
+                                    'w-full sm:w-2/5'
+                                )
                             "
                         >
-                            <div v-if="dataModal.name !== ''" class="flex flex-col sm:flex-row">
+                            <div v-if="dataModal.name !== ''" class="flex flex-col" :class="dataModal.picture_mode == 'portrait' ? 'sm:flex-row' : ''">
                                 <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
-                                <img v-if="dataModal.picture" :src="dataModal.picture" class="sm:order-last sm:mr-0 w-full h-auto sm:w-auto sm:h-96 cursor-pointer" @click="redirect(dataModal.link)" />
+                                <img
+                                    v-if="dataModal.picture"
+                                    :src="dataModal.picture"
+                                    class="w-full h-auto cursor-pointer"
+                                    :class="dataModal.picture_mode == 'portrait' ? 'sm:order-last sm:mr-0 sm:w-auto sm:h-96' : ''"
+                                    @click="redirect(dataModal.link)"
+                                    :title="dataModal.link || ''"
+                                />
                                 <div class="flex flex-col justify-center w-full p-2 text-sm sm:text-base">
                                     <a
-                                        :href="dataModal.link" target="_blank" rel="noreferrer"
+                                        :href="dataModal.link" target="_blank" rel="noreferrer" :title="dataModal.link || ''"
                                         class="text-base sm:text-lg font-medium leading-4 sm:leading-5 mx-auto text-pwsi-link mt-1 sm:mt-0 mb-4 sm:mb-6"
                                     >
                                         <div v-if="dataModal.series" class="font-bold">{{ dataModal.series }}</div>
@@ -199,6 +212,7 @@
         DialogPanel
     } from '@headlessui/vue';
     import api_get from '@/utils/api_get';
+    import redirect from '@/utils/redirect';
 
     const route = useRoute();
     const router = useRouter();
@@ -281,6 +295,7 @@
         type: '',
         episodes: -1,
         picture: '',
+        picture_mode: '',
         score: -1,
         status: '',
         comment: '',
@@ -320,12 +335,6 @@
             datetime_local.setHours(datetime_local.getHours() + 3); /** MSK +3 */
             const date_splitted = datetime_local.toISOString().split("T")[0].split("-");
             dataModal.value.completed_time = `${date_splitted[2]}-${date_splitted[1]}-${date_splitted[0]}`;
-        }
-    };
-
-    function redirect(url) {
-        if (url) {
-            window.open(url, "_blank", "noopener,noreferrer");
         }
     };
 

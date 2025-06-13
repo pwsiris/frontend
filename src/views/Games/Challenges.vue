@@ -77,31 +77,50 @@
                     >
                         <DialogPanel
                             class="transform overflow-hidden rounded-md bg-pwsi-1 border-2 border-pwsi-3 text-pwsi-text shadow-xl transition-all"
-                            :class="dataModal.name !== '' ? 'w-full sm:w-2/5' : ''"
+                            :class="
+                                dataModal.name !== ''
+                                ?
+                                (
+                                    dataModal.picture_mode == 'portrait'
+                                    ?
+                                    'w-4/5 sm:w-1/2'
+                                    :
+                                    'w-full sm:w-2/5'
+                                )
+                                :
+                                ''
+                            "
                         >
-                            <img v-if="dataModal.picture" :src="dataModal.picture" class="w-full h-auto" />
-                            <div class="flex flex-col justify-center w-full p-2 text-sm sm:text-base">
-                                <p class="text-base sm:text-lg font-bold leading-4 sm:leading-5 mx-auto mt-1 sm:mt-2 mb-4 sm:mb-3">{{ dataModal.name }}</p>
-                                <p v-if="dataModal.description"><span class="font-bold">Описание: </span>{{ dataModal.description }}</p>
-                                <p v-if="dataModal.comment"><span class="font-bold">Комментарий: </span>{{ dataModal.comment }}</p>
-                                <p v-if="dataModal.status"><span class="font-bold">Статус: </span>{{ dataModal.status }}</p>
-                                <p v-if="dataModal.order_by"><span class="font-bold">Заказчик: </span>{{ dataModal.order_by }}</p>
-                                <p v-if="dataModal.price"><span class="font-bold">Стоимость: </span>{{ dataModal.price }}</p>
-                                <div v-if="dataModal.records" class="flex flex-wrap justify-center gap-x-3">
-                                    <span class="font-bold -mr-2">Записи:</span>
-                                    <div v-for="record in dataModal.records" :key="record.name">
-                                        <a v-if="record.url.includes('http')" :href="record.url" class="font-bold text-pwsi-link" target="_blank" rel="noreferrer">
-                                            <font-awesome-icon
-                                                :icon="get_source_icon(record.url)"
-                                                class="h-4 w-auto align-middle"
-                                            /> {{ record.name }}
-                                        </a>
-                                        <p v-if="!record.url.includes('http')" class="text-wrap">
-                                            {{ record.name }}: {{ record.url }}
-                                        </p>
+                            <div v-if="dataModal.name !== ''" class="flex flex-col" :class="dataModal.picture_mode == 'portrait' ? 'sm:flex-row' : ''">
+                                <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
+                                <img
+                                    v-if="dataModal.picture"
+                                    :src="dataModal.picture"
+                                    class="w-full h-auto"
+                                    :class="dataModal.picture_mode == 'portrait' ? 'sm:order-last sm:mr-0 sm:w-auto sm:h-96' : ''"
+                                />
+                                <div class="flex flex-col justify-center w-full p-2 text-sm sm:text-base">
+                                    <p class="text-base sm:text-lg font-bold leading-4 sm:leading-5 mx-auto mt-1 sm:mt-2 mb-4 sm:mb-3">{{ dataModal.name }}</p>
+                                    <p v-if="dataModal.description"><span class="font-bold">Описание: </span>{{ dataModal.description }}</p>
+                                    <p v-if="dataModal.comment"><span class="font-bold">Комментарий: </span>{{ dataModal.comment }}</p>
+                                    <p v-if="dataModal.status"><span class="font-bold">Статус: </span>{{ dataModal.status }}</p>
+                                    <p v-if="dataModal.order_by"><span class="font-bold">Заказчик: </span>{{ dataModal.order_by }}</p>
+                                    <p v-if="dataModal.price"><span class="font-bold">Стоимость: </span>{{ dataModal.price }}</p>
+                                    <div v-if="dataModal.records" class="flex flex-wrap justify-center gap-x-3">
+                                        <span class="font-bold -mr-2">Записи:</span>
+                                        <div v-for="record in dataModal.records" :key="record.name">
+                                            <a v-if="record.url.includes('http')" :href="record.url" class="font-bold text-pwsi-link" target="_blank" rel="noreferrer">
+                                                <font-awesome-icon
+                                                    :icon="get_source_icon(record.url)"
+                                                    class="h-4 w-auto align-middle"
+                                                /> {{ record.name }}
+                                            </a>
+                                            <p v-if="!record.url.includes('http')" class="text-wrap">
+                                                {{ record.name }}: {{ record.url }}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                                <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
                             </div>
                         </DialogPanel>
                     </TransitionChild>
@@ -128,6 +147,7 @@
         id: 0,
         name: '',
         picture: '',
+        picture_mode: '',
         order_by: '',
         description: '',
         comment: '',
