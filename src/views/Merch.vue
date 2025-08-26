@@ -3,14 +3,21 @@
         Хотите потискать Ириску? Это вполне возможно - у нас есть мерч!
         Нюансы заказов указаны <button type="button" @click="openModal()" class="text-pwsi-link">ТУТ (инфо)</button>.
         По всем вопросам и заказам обращаться к стримеру в лс
-        <span class="text-pwsi-link"><font-awesome-icon icon="fa-brands fa-discord" class="h-5 w-auto align-middle mr-1" />дискорда (Iris_ti)</span>
-        или
+        <span class="text-pwsi-link"><font-awesome-icon icon="fa-brands fa-discord" class="h-5 w-auto align-middle mr-1" />дискорда (Iris_ti)</span>,
         <a
             href="https://vk.com/iris_ti"
             target="_blank" rel="noreferrer"
             class="text-pwsi-link"
         >
             <font-awesome-icon icon="fa-brands fa-vk" class="h-5 w-auto align-middle mr-1" />вконтакте
+        </a>
+        или
+        <a
+            href="https://t.me/iris_ti"
+            target="_blank" rel="noreferrer"
+            class="text-pwsi-link"
+        >
+            <font-awesome-icon icon="fa-brands fa-telegram" class="h-5 w-auto align-middle mr-1" />телеграм
         </a>.
     </div>
 
@@ -102,7 +109,7 @@
                                     <li>Оформление мерча происходит по предзаказам (сроки ищите в соцсетях)</li>
                                     <li>Стоимость указана отдельно для России и Украины, остальные страны - в зависимости от того, откуда будет доставка</li>
                                     <li>Доставка в стоимость не входит - она рассчитывается индивидуально (разные страны, города и т.д.) и оплачивается заказчиком</li>
-                                    <li>За заказ трёх и более позиций одновременно - стикерпак в подарок</li>
+                                    <!-- <li>За заказ трёх и более позиций одновременно - стикерпак в подарок</li> -->
                                 </ul>
                                 <button className="absolute h-0 w-0 overflow-hidden" /> <!-- for focus-trap -->
                             </div>
