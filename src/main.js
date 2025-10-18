@@ -12,7 +12,7 @@ import {
     faEnvelope, faTrophy, faCircleDollarToSlot, faArrowUpRightFromSquare,
     faXmark, faBars, faAngleDown, faImages, faLanguage, faGamepad,
     faHandshakeAngle, faListCheck, faBook, faCoins, faMessage, faMagnifyingGlassPlus,
-    faCaretUp, faCaretLeft, faCaretRight
+    faCaretUp, faCaretLeft, faCaretRight, faBoxOpen
 } from '@fortawesome/free-solid-svg-icons';
 import { faBoosty, faDonationAlerts, faMyAnimeList, faRoulette, faGamepadDemo } from "@/icons";
 
@@ -21,7 +21,7 @@ library.add(
     faEnvelope, faTrophy, faCircleDollarToSlot, faArrowUpRightFromSquare, faXmark,
     faBars, faAngleDown, faMyAnimeList, faBoosty, faDonationAlerts, faRoulette, faImages,
     faLanguage, faGamepad, faHandshakeAngle, faListCheck, faBook, faCoins, faMessage,
-    faMagnifyingGlassPlus, faCaretUp, faCaretLeft, faCaretRight, faGamepadDemo
+    faMagnifyingGlassPlus, faCaretUp, faCaretLeft, faCaretRight, faGamepadDemo, faBoxOpen
 );
 
 const app = createApp(App);
