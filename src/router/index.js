@@ -85,6 +85,14 @@ const router = createRouter({
             }
         },
         {
+            path: "/cinema",
+            name: 'CinemaView',
+            component: () => import('../views/Other/Cinema.vue'),
+            meta: {
+                title: 'Кинозал | Iris_ti'
+            }
+        },
+        {
             path: "/lore",
             name: 'LoreView',
             component: () => import('../views/Other/Lore.vue'),
@@ -113,7 +121,7 @@ const router = createRouter({
             name: 'GalleryView',
             component: () => import('../views/Other/Gallery.vue'),
             meta: {
-                title: 'Рулетка | Iris_ti'
+                title: 'Галерея | Iris_ti'
             }
         },
         {
