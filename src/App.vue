@@ -102,7 +102,7 @@
         <div class="mx-auto flex flex-col sm:flex-row items-center justify-between max-w-screen-2xl pt-8 pb-4 px-4 sm:px-6 lg:px-8 w-full">
         <!-- <div class="mx-auto flex flex-col sm:flex-row items-center justify-around max-w-screen-2xl pt-8 pb-4 px-4 sm:px-6 lg:px-8 w-full"> -->
             <div class="text-lg font-semibold leading-6">
-                Сайт <span class="text-pwsi-link">Iris_ti</span>, 2023-2025
+                Сайт <span class="text-pwsi-link">Iris_ti</span>, 2023-2026
             </div>
             <div class="mt-2 sm:mt-0 text-lg font-semibold leading-6">
                 Made by
