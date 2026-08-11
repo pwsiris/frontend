@@ -14,11 +14,11 @@
             </div>
 
             <PopoverGroup class="hidden lg:flex lg:gap-x-8 xl:gap-x-12 text-lg font-semibold leading-6 z-20">
-                <div v-for="link in header_links" :key="link.name">
-                    <router-link v-if="link.url" :key="link.url" :to="link.url" class="hover:text-pwsi-link focus:outline-none">{{ link.name }}</router-link>
+                <div v-for="item in header_menu" :key="item.name">
+                    <router-link v-if="item.url" :key="item.url" :to="item.url" class="hover:text-pwsi-link focus:outline-none">{{ item.name }}</router-link>
                     <Popover v-else class="relative">
                         <PopoverButton class="flex items-center gap-x-1 pointer-events-auto hover:text-pwsi-link focus:outline-none">
-                            {{ link.name }}<font-awesome-icon icon="fa-solid fa-angle-down" class="h-3 w-3 flex-none" aria-hidden="true"/>
+                            {{ item.name }}<font-awesome-icon icon="fa-solid fa-angle-down" class="h-3 w-3 flex-none" aria-hidden="true"/>
                         </PopoverButton>
 
                         <transition 
@@ -29,11 +29,14 @@
                             leave-from-class="opacity-100 translate-y-0"
                             leave-to-class="opacity-0 translate-y-1"
                         >
-                            <PopoverPanel v-slot="{ close }" :class="link.menu_style" class="absolute top-full max-w-md z-20 mt-3 overflow-hidden rounded-md bg-pwsi-1 border-2 border-pwsi-3 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow">
+                            <PopoverPanel v-slot="{ close }" :class="item.menu_style" class="absolute top-full max-w-md z-20 mt-3 overflow-hidden rounded-md bg-pwsi-1 border-2 border-pwsi-3 shadow-md ring-1 ring-pwsi-shadow/5 shadow-pwsi-shadow">
                                 <div class="p-2 flex flex-col">
-                                    <router-link @click="close()" v-for="sublink in link.submenu_links" :key="sublink.url" :to="sublink.url" class="p-2 my-2 flex items-center hover:text-pwsi-link">
-                                        <font-awesome-icon :icon="sublink.icon" class="w-5 h-5 mr-2" />{{ sublink.name }}
-                                    </router-link>
+                                    <div v-for="subitem in item.submenu_items" :key="subitem.url">
+                                        <div v-if="subitem.name == 'DIVIDER'" class="border rounded-md border-pwsi-3 mx-2"></div>
+                                        <router-link v-else @click="close()" :to="subitem.url" class="p-2 my-2 flex items-center hover:text-pwsi-link leading-none">
+                                            <font-awesome-icon :icon="subitem.icon" class="w-5 h-5 mr-2" />{{ subitem.name }}
+                                        </router-link>
+                                    </div>
                                 </div>
                             </PopoverPanel>
                         </transition>
@@ -53,30 +56,32 @@
                 <div class="mt-6 flow-root">
                     <div class="-my-6 divide-y divide-pwsi-text/5">
                         <div class="space-y-2 py-6">
-                            <div v-for="link in header_links" :key="link.name">
+                            <div v-for="item in header_menu" :key="item.name">
                                 <router-link
-                                    v-if="link.url"
-                                    :key="link.url"
-                                    :to="link.url"
+                                    v-if="item.url"
+                                    :key="item.url"
+                                    :to="item.url"
                                     @click="mobileMenuOpen = false"
                                     class="-mx-3 block rounded-md px-3 py-2 text-base font-semibold leading-7"
                                 >
-                                    {{ link.name }}
+                                    {{ item.name }}
                                 </router-link>
                                 <Disclosure v-else as="div" class="-mx-3 px-3 py-2" v-slot="{ open }">
                                     <DisclosureButton class="flex w-full items-center rounded-md text-base font-semibold leading-7">
-                                        {{ link.name }}<font-awesome-icon icon="fa-solid fa-angle-down" class="h-4 w-4 flex-none ml-2" :class="open ? 'rotate-180 transform' : ''" aria-hidden="true"/>
+                                        {{ item.name }}<font-awesome-icon icon="fa-solid fa-angle-down" class="h-4 w-4 flex-none ml-2" :class="open ? 'rotate-180 transform' : ''" aria-hidden="true"/>
                                     </DisclosureButton>
                                     <DisclosurePanel v-slot="{ close }" class="mt-2 rounded-md bg-pwsi-1 border-2 border-pwsi-3">
-                                        <router-link
-                                            v-for="sublink in link.submenu_links"
-                                            :key="sublink.url"
-                                            :to="sublink.url"
-                                            @click="mobileMenuOpen = false; close()"
-                                            class="p-4 text-base font-semibold leading-7 flex items-center"
-                                        >
-                                            <font-awesome-icon :icon="sublink.icon" class="w-5 h-5 mr-2" />{{ sublink.name }}
-                                        </router-link>
+                                        <div v-for="subitem in item.submenu_items" :key="subitem.url">
+                                            <div v-if="subitem.name == 'DIVIDER'" class="border rounded-md border-pwsi-3 mx-4"></div>
+                                            <router-link
+                                                v-else
+                                                :to="subitem.url"
+                                                @click="mobileMenuOpen = false; close()"
+                                                class="p-4 text-base font-semibold leading-none flex items-center"
+                                            >
+                                                <font-awesome-icon :icon="subitem.icon" class="w-5 h-5 mr-2" />{{ subitem.name }}
+                                            </router-link>
+                                        </div>
                                     </DisclosurePanel>
                                 </Disclosure>
                             </div>
@@ -97,7 +102,7 @@
         <div class="mx-auto flex flex-col sm:flex-row items-center justify-between max-w-screen-2xl pt-8 pb-4 px-4 sm:px-6 lg:px-8 w-full">
         <!-- <div class="mx-auto flex flex-col sm:flex-row items-center justify-around max-w-screen-2xl pt-8 pb-4 px-4 sm:px-6 lg:px-8 w-full"> -->
             <div class="text-lg font-semibold leading-6">
-                Сайт <span class="text-pwsi-link">Iris_ti</span>, 2023-2025
+                Сайт <span class="text-pwsi-link">Iris_ti</span>, 2023-2026
             </div>
             <div class="mt-2 sm:mt-0 text-lg font-semibold leading-6">
                 Made by
@@ -133,11 +138,11 @@
         PopoverPanel
     } from '@headlessui/vue';
 
-    const header_links = [
+    const header_menu = [
         {
             name: "Игры",
             menu_style: "-left-0",
-            submenu_links: [
+            submenu_items: [
                 {
                     name: "Игры",
                     url: "/games",
@@ -175,21 +180,25 @@
         {
             name: "Ещё",
             menu_style: "-right-0",
-            submenu_links: [
+            submenu_items: [
+                {
+                    name: "Кинозал",
+                    url: "/cinema",
+                    icon: "fa-solid fa-film"
+                },
                 {
                     name: "Аукционы",
                     url: "/auctions",
                     icon: "fa-solid fa-coins"
                 },
                 {
+                    name: "DIVIDER",
+                    url: "1"
+                },
+                {
                     name: "Лор",
                     url: "/lore",
                     icon: "fa-solid fa-book"
-                },
-                {
-                    name: "Сообщение стримеру",
-                    url: "/message",
-                    icon: "fa-solid fa-message"
                 },
                 {
                     name: "Рулетка",
@@ -205,6 +214,11 @@
                     name: "Машинный перевод",
                     url: "/machine-translation",
                     icon: "fa-solid fa-language"
+                },
+                {
+                    name: "Сообщение стримеру",
+                    url: "/message",
+                    icon: "fa-solid fa-message"
                 }
             ]
         }

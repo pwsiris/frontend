@@ -10,7 +10,7 @@
         <input
             @input="update_search"
             @keyup.enter="fake_submit()"
-            placeholder="Поиск по аукцинам..."
+            placeholder="Поиск..."
             id="search_input"
             class="focus:outline-none w-4/5 sm:w-1/3 p-2 pr-8 rounded-md text-pwsi-text bg-pwsi-1 border-2 border-pwsi-3"
         />
