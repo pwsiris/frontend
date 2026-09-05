@@ -2,7 +2,8 @@ const fields_types = {
     anime: {
         id: {
             type: "int",
-            nullable: false
+            nullable: true,
+            primary: true
         },
         new_id: {
             type: "int",
@@ -76,7 +77,8 @@ const fields_types = {
     auctions: {
         id: {
             type: "int",
-            nullable: false
+            nullable: false,
+            primary: true
         },
         name: {
             type: "str",
@@ -119,7 +121,8 @@ const fields_types = {
     challenges: {
         id: {
             type: "int",
-            nullable: false
+            nullable: false,
+            primary: true
         },
         name: {
             type: "str",
@@ -166,7 +169,8 @@ const fields_types = {
     cinema: {
         id: {
             type: "int",
-            nullable: false
+            nullable: false,
+            primary: true
         },
         name: {
             type: "str",
@@ -205,7 +209,8 @@ const fields_types = {
     credits: {
         id: {
             type: "int",
-            nullable: false
+            nullable: false,
+            primary: true
         },
         name: {
             type: "str",
@@ -237,10 +242,38 @@ const fields_types = {
             nullable: true
         }
     },
+    data_params: {
+        id: {
+            type: "int",
+            nullable: false
+        },
+        name: {
+            type: "str",
+            nullable: false,
+            primary: true
+        },
+        value_bool: {
+            type: "bool",
+            nullable: true
+        },
+        value_int: {
+            type: "int",
+            nullable: true
+        },
+        value_float: {
+            type: "float",
+            nullable: true
+        },
+        value_str: {
+            type: "str",
+            nullable: true
+        },
+    },
     games: {
         id: {
             type: "int",
-            nullable: true
+            nullable: true,
+            primary: true
         },
         new_id: {
             type: "int",
@@ -303,7 +336,8 @@ const fields_types = {
     lore: {
         id: {
             type: "int",
-            nullable: false
+            nullable: false,
+            primary: true
         },
         text: {
             type: "str",
@@ -322,7 +356,8 @@ const fields_types = {
     marathons: {
         id: {
             type: "int",
-            nullable: false
+            nullable: false,
+            primary: true
         },
         name: {
             type: "str",
@@ -389,7 +424,8 @@ const fields_types = {
     merch: {
         id: {
             type: "int",
-            nullable: false
+            nullable: false,
+            primary: true
         },
         name: {
             type: "str",
@@ -433,7 +469,8 @@ const fields_types = {
     roulette: {
         id: {
             type: "int",
-            nullable: false
+            nullable: false,
+            primary: true
         },
         name: {
             type: "str",
@@ -451,7 +488,8 @@ const fields_types = {
     socials: {
         id: {
             type: "int",
-            nullable: false
+            nullable: false,
+            primary: true
         },
         name: {
             type: "str",

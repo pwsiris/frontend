@@ -213,7 +213,11 @@
                                                     v-else
                                                     :title="selected_page_fields_types[field]?.placeholder || ''"
                                                     :placeholder="selected_page_fields_types[field]?.placeholder || ''"
-                                                    :disabled="field == 'id' ? true : false"
+                                                    :disabled="(
+                                                        !dataModal.new && (field == 'id' || selected_page_fields_types[field]?.primary)
+                                                        ||
+                                                        dataModal.new && field == 'id' && !selected_page_fields_types[field]?.nullable
+                                                    ) ? true : false"
                                                     @keyup.enter="fake_submit()"
                                                     :value="dataModal[field]"
                                                     :id="`input__${field}`"
@@ -292,6 +296,10 @@
         {
             name: "Благодарности",
             path: "credits"
+        },
+        {
+            name: "Параметры",
+            path: "data_params"
         },
         {
             name: "Игры",
@@ -551,10 +559,8 @@
         }
 
         if (is_updated) {
-        // if (false) {
-            const id_element = document.getElementById("input__id");
-            const id_value = parseInt(id_element.value, 10);
-            updated_object["id"] = id_value;
+            const primary_field_data = get_primary_field();
+            updated_object[primary_field_data.field] = primary_field_data.value
             const answer = (await api_put(`/${selected_page.value.path}`, [updated_object])).value;
             if (answer.error) {
                 button_update.textContent = JSON.stringify(answer.content || "Неизвестная ошибка!");
@@ -569,7 +575,7 @@
                     }
                     
                     for (const element of data_filtered.value) {
-                        if (!is_new_id && element["id"] == id_value) {
+                        if (!is_new_id && element[primary_field_data.field] == primary_field_data.value) {
                             Object.assign(dataModal.value, parse_into_datamodal(element));
                             break;
                         };
@@ -602,9 +608,11 @@
         button_update.disabled = true;
         button_delete.disabled = true;
 
-        const id_element = document.getElementById("input__id");
-        const id_value = parseInt(id_element.value, 10);
-        const answer = (await api_delete(`/${selected_page.value.path}`, [{id: id_value}])).value;
+        const primary_field_data = get_primary_field();
+        const delete_data = {};
+        delete_data[primary_field_data.field] = primary_field_data.value
+
+        const answer = (await api_delete(`/${selected_page.value.path}`, [delete_data])).value;
         if (answer.error) {
             button_delete.textContent = JSON.stringify(answer.content || "Неизвестная ошибка!");
             await sleep(5000);
@@ -623,6 +631,27 @@
             };
         };
     };
+
+    function get_primary_field() {
+        var primary_field = null;
+        var primaty_field_value = null;
+        for (const field of selected_page_fields.value) {
+            if (selected_page_fields_types.value[field]?.primary) {
+                primary_field = field;
+                break
+            }
+        };
+        const primary_field_element = document.getElementById(`input__${primary_field}`);
+        switch (selected_page_fields_types.value[primary_field].type) {
+            case "str":
+                primaty_field_value = primary_field_element.value;
+                break;
+            case "int":
+                primaty_field_value = parseInt(primary_field_element.value, 10);
+                break;
+        };
+        return {field: primary_field, value: primaty_field_value};
+    }
 
     function parse_input(raw) {
         var errors = false;

@@ -62,6 +62,14 @@ const fields = {
         "creators",
         "order"
     ],
+    data_params: [
+        "id",
+        "name",
+        "value_bool",
+        "value_int",
+        "value_float",
+        "value_str"
+    ],
     games: [
         "id",
         "name",
