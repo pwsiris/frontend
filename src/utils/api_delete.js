@@ -2,7 +2,7 @@ import axios from "axios";
 import {ref} from 'vue';
 
 
-export default async function api_get(route) {
+export default async function api_delete(route, data) {
     var response_data = ref(null);
 
     var url_string = `/api${route}`;
@@ -15,19 +15,19 @@ export default async function api_get(route) {
     }
 
     try {
-        const response = await axios.get(
-            url_string, {withCredentials: true}
+        const response = await axios.delete(
+            url_string, {withCredentials: true, data: data}
         ).then(
             function (response) {
-                response_data.value = response.data.content;
+                response_data.value = {error: false, content: response.data.content};
             }
         ).catch(
             function (error) {
-                response_data.value = null;
+                response_data.value = {error: true, content: error.response.data.detail};
             }
         );
     } catch (e) {
-        response_data.value = null;
+        response_data.value = {error: true, content: null};
     }
     return response_data;
 };

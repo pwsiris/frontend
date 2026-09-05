@@ -117,13 +117,18 @@
         if (!description) {
             modal_message = "Нельзя отправить пустое сообщение";
         } else {
-            const answer = (await api_post('/site/message', {"title": title, "description": description})).value;
-            if (answer == "Sended") {
-                modal_message = "Сообщение отправлено";
-                document.getElementById('description').value = "";
-            } else if (answer == "DISABLED") {
-                modal_message = "Отправка сообщений отключена";
-            }
+            const answer = (await api_post('/site/message', {"title": title, "description": description}, "message")).value;
+
+            if (answer.error) {
+                modal_message = answer.content ? JSON.stringify(answer.content) : "Send error!";
+            } else {
+                if (answer.content == "Sended") {
+                    modal_message = "Сообщение отправлено";
+                    document.getElementById('description').value = "";
+                } else if (answer == "DISABLED") {
+                    modal_message = "Отправка сообщений отключена";
+                };
+            };
         }
         openModal(modal_message);
     };
