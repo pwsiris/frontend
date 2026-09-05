@@ -133,6 +133,22 @@ const router = createRouter({
             }
         },
         {
+            path: "/login",
+            name: 'LoginView',
+            component: () => import('../views/Admin/Login.vue'),
+            meta: {
+                title: 'Логин | Iris_ti'
+            }
+        },
+        {
+            path: "/admin",
+            name: 'AdminView',
+            component: () => import('../views/Admin/Main.vue'),
+            meta: {
+                title: 'Админка | Iris_ti'
+            }
+        },
+        {
             path: "/:pathMatch(.*)*",
             name: 'ErrorView',
             component: () => import('../views/NotFound.vue'),

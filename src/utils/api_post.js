@@ -2,7 +2,7 @@ import axios from "axios";
 import {ref} from 'vue';
 
 
-export default async function api_post(route, data) {
+export default async function api_post(route, data, params) {
     var response_data = ref(null);
 
     var url_string = `/api${route}`;
@@ -11,28 +11,37 @@ export default async function api_post(route, data) {
         window.location.href.includes("localhost:") ||
         window.location.origin.includes("localhost:")
     ) {
-        url_string = `http://127.0.0.1:8040/api${route}`;
+        url_string = `http://localhost:8040/api${route}`;
     }
 
     const headers = {
-        "Content-Type": "application/json",
-        "X-SITE-MESSAGES-TOKEN": import.meta.env.VITE_MESSAGE_TOKEN
+        "Content-Type": "application/json"
     };
+
+    if (params == "message") {
+        headers["X-SITE-MESSAGES-TOKEN"] = import.meta.env.VITE_MESSAGE_TOKEN;
+    }
+
+    var request_params = {headers: headers};
+    if (params == "data") {
+        request_params["withCredentials"] = true;
+        // request_params = {withCredentials: true};
+    }
 
     try {
         const response = await axios.post(
-            url_string, data, {headers: headers}
+            url_string, data, request_params
         ).then(
             function (response) {
-                response_data.value = response.data.content;
+                response_data.value = {error: false, content: response.data.content};
             }
         ).catch(
             function (error) {
-                response_data.value = error.response.data.content;
+                response_data.value = {error: true, content: error.response.data.detail};
             }
         );
     } catch (e) {
-        response_data.value = "Send error";
+        response_data.value = {error: true, content: null};
     }
     return response_data;
 };
