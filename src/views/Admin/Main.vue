@@ -597,9 +597,6 @@
         button_update.textContent = "Изменить";
         button_delete.disabled = false;
         button_update.disabled = false;
-
-        // oldModel.value = {};
-        // updModel.value = {};
     };
 
     async function delete_item() {
